@@ -1,0 +1,10 @@
+header {
+background: #FCF39F; /* Old browsers */
+background: -moz-linear-gradient(-45deg, rgba(252,243,159,0.8) 0%, rgba(241,246,102,0.93) 87%, rgba(239,247,93,0.93) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, rgba(252,243,159,0.8) 0%,rgba(241,246,102,0.93) 87%,rgba(239,247,93,0.93) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, rgba(252,243,159,0.8) 0%,rgba(241,246,102,0.93) 87%,rgba(239,247,93,0.93) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+body {
+	background-color: #ffffd1
+}

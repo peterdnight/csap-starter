@@ -1,0 +1,43 @@
+#
+#  Embedded Services configuration: activemq and hsql db, uses in memory security
+#  Provides 100% isolation
+#
+
+# In memory authentication uses csapSecurityMemory.txt 
+csap:
+  security: 
+    enabled: false
+    ldap-enabled: false 
+
+
+server:
+  context-path: /
+  
+# Embedded JMS & DB
+spring:
+  profiles: embedded
+  
+  activemq:
+    in-memory: true
+    pooled: false
+    
+  
+  jpa: 
+    database-platform: org.hibernate.dialect.HSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+my-service-configuration:
+  db:
+    driver-class-name: org.hsqldb.jdbcDriver
+    username: sa
+    password: 
+    max-active: 5
+    url: jdbc:hsqldb:mem:testdb
+  jms:
+    enabled: true
+    server-url: vm://localhost?broker.persistent=false
+
+    
+    

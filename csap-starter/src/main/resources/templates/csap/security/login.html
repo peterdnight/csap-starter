@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"  
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+	<head>
+
+		<title>Login</title>
+
+
+		<script th:replace="~{ csap/fragments/libsAndStyles :: pageContent }"></script>
+
+
+		<style>
+			input {
+				margin-right: 1em;
+			}
+
+			header div {
+				float: right;
+				display: inline;
+				font-size: 0.7em;
+				margin-right: 2em
+			}
+
+			.news label {
+				margin-left: 2em;
+				margin-right: 1em;
+				width: 9em;
+				display: inline-block;
+				text-align: right;
+			}
+			.news span {
+				font-weight: bold;
+			}
+			div.warning {
+				display:block;
+				white-space: normal;
+			}
+		</style>
+	</head>
+	<body th:inline="text" >
+
+
+		<header>
+			CSAP Login Page 
+			<div>Version: <span th:text="${serviceVersion}"></span></div>
+		</header>
+		<br/>
+		
+		<section style="position:absolute; left: 50%; top: 40%; margin-left: -15em; margin-top: -5em; padding-left: 2em; padding-right: 2em">
+			<div class="title">CSAP Service: <span th:text="${serviceName}"></span></div>
+
+			<br/>
+			<div class="warning"
+				 th:if="${nonSsl != null }">
+				Insecure Login Detected: It is strongly recommended to use HTTPS
+				<br/>
+				<a class="pushButton" th:href="${sslLoginUrl}"
+				   th:if="${ sslLoginUrl != null }">
+					Use Secure Login Page
+				</a>
+			</div>
+			<form method="POST" name="myForm" action="login">
+
+				User: <input
+					name="username" value="" size="12"/>
+				Pass: <input
+					name="password" value="" type="password" size="12"/>
+
+				<input type="submit"  class="submit" value="login"/>
+
+				<br/><br/>
+				<div class="news" style="font-size: 0.7em; width: 90%">
+					<label>Access Control:</label> <span>[[ ${ ldap } ]]</span> <br/>
+					<label>view:</label>  <span>[[ ${ view } ]]</span> <br/>
+					<label>admin:</label> <span>[[ ${ admin } ]]</span> <br/>
+					<label>build:</label> <span>[[ ${ build } ]]</span> <br/>
+					<label>infra:</label> <span>[[ ${ infra } ]]</span> <br/>
+
+				</div>
+					<input style="font-size: 0.5em; padding:0; float: right; width: 18em" th:if="${_csrf != null}"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"/>
+			</form>
+			<br/>
+		</section>
+
+
+	</body>
+
+</html>

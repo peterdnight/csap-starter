@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+
+		<title th:text="${ @csapInformation.name }"></title>
+
+		<script th:replace="~{ csap/fragments/libsAndStyles :: pageContent }"></script>
+
+		<script th:src="@{/js/helpers.js}" ></script> 
+
+
+		<style>
+			table.simple {
+				width: 80em;
+				margin-bottom: 3em;
+			}
+
+			table.simple td:nth-child(1) {
+				width: 15em;
+			}
+
+			table.simple td:nth-child(2) {
+				width: 5em;
+			}
+
+			header a {
+				position: absolute;
+				left: 10px;
+				font-size: 0.8em;
+			}
+
+			#ajaxResults, #inlineResults {
+				display: none;
+			}
+
+			div.noteAlt {
+				font-size: 0.8em;
+				position: absolute;
+				right: 10px;
+				top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header>
+			<a class="simple" th:href="@{/}">Return to main page</a>
+			CSAP: JMS and JPA Integration Tests
+		</header>
+
+
+		<section id="inlineResults" th:text="${result}"></section>
+
+		<div class="noteAlt" th:if="session.lastMessage != null">
+			Last Message sent: <span th:text="${session.lastMessage}"></span>
+		</div>
+
+
+		<table id="jpa" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">JPA DB Features</div> Summary</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a class="showData simple" th:href="@{/spring-app/#}">Show Test Data</a></td>
+					<td>pop up</td>
+					<td>Show Test data using ajax:
+						Jquery->JavaScript->SpringMvc->SpringJpa->Oracle</td>
+				</tr>
+
+				<tr>
+					<td>Show And Delete</td>
+					<td>inline</td>
+					<td>SpringMVC - JPA:
+						<form th:action="@{/spring-app/showTestData}" style="display: inline">
+							<input class="pushButton" type="submit" title="show data"
+								   value="Show" />
+						</form>
+
+						<form th:action="@{/spring-app/removeTestData}"
+							  style="display: inline; margin-left: 2em">
+							<input type="submit" class="pushButton" value="Remove Test Data" />
+							filter:
+							<input name="filter" th:value="${testToken}" style="width: 5em" />
+
+						</form>
+
+					</td>
+				</tr>
+
+
+				<tr>
+					<td>Store Item</td>
+					<td>inline</td>
+					<td>
+
+						<form th:action="@{/spring-app/addTestData}" style="display: inline-block">
+							<input class="pushButton" type="submit" value="JPA insert" />
+							Enter the Data to insert (short):
+							<input name="message" value="simple" />
+						</form>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>Profile Insert Time</td>
+					<td>json</td>
+					<td>
+
+						<form th:action="@{/spring-rest/addBulkData}">
+							<input class="pushButton longTime" type="submit" value="Profile" />
+							Message:
+							<input name="message" th:value="${DataToInsertIntoDb}"
+								   style="width: 15em;" />
+
+							Count:
+							<input name="count" title="Number of times to insert  data"
+								   style="width: 4em;" value="100" size="3" type="number" />
+							Pad:
+							<input name="payloadPadding"
+								   title="Add more data to increase record size" type="checkbox"
+								   checked="checked" />
+
+						</form>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>Profile Query Time</td>
+					<td>json</td>
+					<td>
+
+						<form th:action="@{/api/showTestDataJson}">
+							<input class="pushButton longTime" type="submit" value="Profile" />
+							Query Filter:
+							<input name="filter" th:value="${testToken}" />
+							Count:
+							<input name="count" title="Number of times to query  data"
+								   value="100" type="number" style="width: 4em;" />
+							max Records:
+							<input name="pageSize" title="Number of records for each query"
+								   value="1000" type="number" style="width: 4em;" />
+						</form>
+
+					</td>
+				</tr>
+
+
+				<tr>
+					<td>Misc</td>
+					<td>inline</td>
+					<td>
+
+						<form th:action="@{/spring-app/showTestData}" style="display: inline">
+							<input name="memoryLeak" value="yes" type="hidden" />
+							<input class="pushButton" type="submit"
+								   value="Show Test Data - MEMORY LEAK)" />
+						</form>
+
+						<form th:action="@{/spring-app/showTestDataFromREST}" style="display: inline">
+							<input type="submit" class="pushButton"
+								   value="Show Test Data - SpringMVC - SpringREST - JPA" />
+						</form>
+
+
+						<form th:action="@{/spring-app/showJmxData}" style="display: inline">
+							<input type="submit" class="pushButton"
+								   value="Test JMX Client to Server - SpringMVC - JMX" />
+						</form>
+
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+
+
+
+		<table id="jms" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">JMS Features</div> Summary</th>
+					<th>returns</th>
+					<th>Description
+						<div class="note" style="display: inline">Note: view jvm logs
+							to confirm message was correctly processed</div>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a class="simple"  title=""
+						   th:href="@{/spring-rest/sendNewJms}"> Send using @JmsListener</a></td>
+					<td>json</td>
+					<td>Send a message to multiple @JmsListeners - each bound to a different method signature.</td>
+				</tr>
+
+				<tr>
+					<td>Send Message</td>
+					<td>Inline</td>
+					<td>
+						<form th:action="@{/spring-app/sendMessage}">
+							<input type="submit" class="pushButton" value="Send Jms" />
+							Message:
+							<input name="message" value="test" />
+							(All are stored in DB)
+
+						</form>
+
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>Send Multiple Messages</td>
+
+					<td>Inline</td>
+
+					<td>
+						<form th:action="@{/spring-app/sendManyMessages}">
+							<input type="submit" class="pushButton" value="Send Jms" />
+							Message: <select name="message" style="width: 10em"
+											 onchange="triggerGraphRefresh();">
+								<option value="simple">Simple Message</option>
+								<option value="noDb"
+										title="message will not be persisted into db">noDb</option>
+								<option value="burnCpu">Burn Cpu</option>
+								<option value="burnDb">Burn DB</option>
+								<option value="sleep">Sleep for 15s</option>
+							</select> Pad: <select name="payloadPadding"
+												   title="Message padding to increase size"
+												   style="margin-left: 0em; margin-right: 2em; width: 5em"
+												   onchange="triggerGraphRefresh();">
+								<option value="none">none</option>
+								<option value="1kb">1kb</option>
+								<option value="10kb">10kb</option>
+								<option value="100kb">100kb</option>
+								<option value="1mb">1mb</option>
+								<option value="3mb">3mb</option>
+								<option value="5mb">5mb</option>
+								<option value="10mb">10mb</option>
+							</select> Copies to send:
+							<input name="count" title="Number of times to send jms message"
+								   style="width: 4em;" value="10" size="3" type="number" />
+						</form>
+
+					</td>
+				</tr>
+
+
+
+				<tr>
+					<td>Send Custom Messages</td>
+					<td>Inline</td>
+					<td>
+
+						<form th:action="@{/spring-app/sendManyMessages}">
+							<input type="submit" class="pushButton" value="Send Jms" />
+							Message:
+							<input name="message" value="" />
+
+							Pad: <select name="payloadPadding"
+										 title="Message padding to increase size"
+										 style="margin-left: 0em; margin-right: 2em; width: 5em"
+										 onchange="triggerGraphRefresh();">
+								<option value="none">none</option>
+								<option value="1kb">1kb</option>
+								<option value="10kb">10kb</option>
+								<option value="100kb">100kb</option>
+								<option value="1mb">1mb</option>
+								<option value="3mb">3mb</option>
+								<option value="5mb">5mb</option>
+								<option value="10mb">10mb</option>
+							</select> Copies to send:
+							<input name="count" title="Number of times to send jms message"
+								   style="width: 4em;" value="10" size="3" type="number" />
+						</form>
+
+
+					</td>
+				</tr>
+
+
+
+				<tr>
+					<td>JMS Object Message</td>
+					<td>Inline</td>
+					<td>
+
+
+						<form th:action="@{/spring-app/sendObjectMessage}">
+							<input type="submit" class="pushButton"
+								   value="Send Jms Object Message" />
+							Text for JMS Object Message to send and insert:
+							<input name="message" value="test" />
+						</form>
+
+					</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+
+
+
+
+
+
+
+		<div id="ajaxResults">
+			<table class="bordered"
+				   style="table-layout: fixed; width: 95%; font-size: 0.8em;">
+				<thead>
+					<tr>
+						<th style="width: 10em">Id</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+
+		<footer th:replace="csap/fragments/page :: footer"></footer>
+	</body>
+
+</html>

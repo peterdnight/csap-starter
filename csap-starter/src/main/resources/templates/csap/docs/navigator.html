@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+
+
+	<head>
+
+		<title th:inline="text">  @CsapDoc [[ ${ @csapInformation.name } ]]</title>
+
+		<script th:replace="csap/fragments/libsAndStyles :: pageContent"></script>
+
+		<style>
+
+			div.infoBlock {
+				padding: 0.25em;
+			}
+
+			table.simple, div.info, a.simple, a.simple:hover {
+				font-family: "Source Code Pro",Menlo,Consolas,Monaco,monospace;
+			}
+			table td:nth-child(1) {
+				width: 15em;
+			}
+			table td:nth-child(1) a.simple {
+				display: block ;
+				margin-bottom: 1em;
+			}
+
+
+			table td:nth-child(2), table th:nth-child(2) {
+				width: 3em;
+				padding-left: 0.5em;
+				padding-right: 0.5em;
+			}
+			table td:nth-child(3), table th:nth-child(3) {
+				width: 14em;
+				padding-left: 0.5em;
+				padding-right: 0.5em;
+			}
+			div.myCols {
+				-webkit-column-count: 4; /* Chrome, Safari, Opera */
+				-moz-column-count: 4; /* Firefox */
+				column-count: 4;
+			}
+
+			header .noteAlt {
+				font-size: 0.7em;
+				margin: 0;
+				padding: 3px;
+			}
+
+			header {
+				padding-top: 0.5em
+			}
+
+			.docLabel {
+				width: 5em;
+			}
+
+			.docLabel textarea {
+				margin: 0;
+				line-height: 0.8em;
+				height: 1em;
+				width: 10em;
+				display: block;
+			}
+
+			.smallSubmit {    
+				display: block;
+				font-size: 0.8em;
+				line-height: 1em;
+				cursor: pointer;
+			}
+			.smallSubmit:hover {
+
+			}
+
+			label.java {
+				display: inline-block;
+				font-weight: bold;
+				margin-left: 0;
+				margin-top: 0.5em;
+
+			}
+			form {
+				margin-bottom: 1em;
+			}
+
+			.meth {
+				margin-left: 2em;
+			}
+
+			div.info, table#status {
+				margin: 2em;
+				margin-right: 4em;
+
+			}
+
+			div.info div.header {
+				font-weight: bold;
+				font-size: 1.4em;
+			}
+
+
+			img.csapDocImage, img.csapDocImageEnlarged {
+				border: 2px solid lightgray;
+				border-radius: 5px;
+				cursor: pointer;
+				margin: 1em;
+				padding: 0.5em;
+				width: 300px;
+				transition: all 1s;
+			}
+
+			img.csapDocImage:hover {
+				background-color: black;
+			}
+
+			img.csapDocImageEnlarged {
+				background-color: black;
+				position: absolute;
+				width: 800px;
+				z-index: 9999;
+				left: 2em;
+			}
+
+			div.autogen {
+				font-size: 0.7em;
+				font-style: italic;
+				position: absolute ;
+			}
+			
+			span.highlight {
+				padding: 0.25em;
+				display: inline-block ;
+				background-color: yellow;
+			}
+
+	
+		</style>
+
+
+		<script th:src="@{/js/simple.js}"  ></script>
+
+		<script>
+
+			$( document ).ready( function () {
+				$( "#csapPageLabel" ).hide();
+				$( "#csapPageVersion" ).css( "margin-left", "3em" );
+				$( "img.csapDocImage" )
+						.attr( "title", "Click to toggle display size" )
+						.click( function ( e ) {
+							$( this ).toggleClass( 'csapDocImageEnlarged' );
+						} );
+
+				$( "button.smallSubmit" ).click( function () {
+					alertify.error( "Submitting request. Page will auto-refresh on complete", 0 );
+					$( this ).parent().submit();
+				} );
+			} );
+
+
+		</script>
+
+
+	</head>
+
+	<body th:inline="text" >
+
+		<header th:replace="csap/fragments/page :: header"></header>
+
+		<div class="warning"
+			 th:if="${ error != null }">
+			[[ ${ error } ]]
+		</div>
+
+		<div class="autogen">Auto generated using @CsapDoc</div>
+
+		<div class="info">
+
+			<div class="header">[[ ${ @csapInformation.name } ]] Documentation</div>
+			<div class=""> 
+				All classes annotated with <div class="noteHighlight">@Controller</div> 
+				or <div class="noteHighlight">@RestController</div> are shown.
+				<br/>Optional use of <div class="noteHighlight">@CsapDoc</div> enables custom notes and 
+					integration tests to be added.
+					<span class="highlight"> Click on API column to browse and test.</span>
+			</div>
+
+		</div>
+		
+		<div class="info"
+			   th:if="${ publicCsapDocs == null}">
+
+			<div class="header">No apis have been marked with @CsapDoc.PUBLIC</div>
+
+		</div>
+		
+
+		<table id="external" class="simple" 
+			   th:if="${ publicCsapDocs != null}">
+			<thead>
+
+				<tr>
+					<th title="Apis are backwards compatible per SLA">Public Apis</th>
+					<th>Type</th>
+					<th>Package</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+				<tr
+					th:each="doc : ${publicCsapDocs.values() } ">
+					<td> 
+						<a class="simple" th:href='@{${baseUrl+"/class"}(clazz=${doc.get("clazz")} )}'>[[ ${ doc.get("name") } ]]</a> 
+					</td>
+					<td> [[ ${ doc.get("type") } ]]</td>
+					<td th:utext='${doc.get("package")}'></td>
+					<td th:utext='${doc.get("notes")}'></td>
+				</tr>
+				
+			</tbody>
+
+		</table>
+		
+		
+
+		<table id="external" class="simple" 
+			   th:if="${ privateCsapDocs != null}">
+			<thead>
+
+				<tr>
+					<th title="Apis are subject to change without notice">Private Apis</th>
+					<th>Type</th>
+					<th>Package</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+				<tr
+					th:each="doc : ${privateCsapDocs.values() } ">
+					<td> 
+						<a class="simple" th:href='@{${baseUrl+"/class"}(clazz=${doc.get("clazz")} )}'>[[ ${ doc.get("name") } ]]</a> 
+					</td>
+					<td> [[ ${ doc.get("type") } ]]</td>
+					<td th:utext='${doc.get("package")}'></td>
+					<td th:utext='${doc.get("notes")}'></td>
+				</tr>
+				
+			</tbody>
+
+		</table>
+		
+
+		<table id="external" class="simple" 
+			   th:if="${ otherDocs != null}">
+			<thead>
+
+				<tr>
+					<th title="Apis are subject to change per provider SLA">Provider Apis</th>
+					<th>Type</th>
+					<th>Package</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+
+				<tr
+					th:each="doc : ${otherDocs.values() } ">
+					<td> 
+						<a class="simple" th:href='@{${baseUrl+"/class"}(clazz=${doc.get("clazz")} )}'>[[ ${ doc.get("name") } ]]</a> 
+					</td>
+					<td> [[ ${ doc.get("type") } ]]</td>
+					<td th:utext='${doc.get("package")}'></td>
+					<td th:utext='${doc.get("notes")}'></td>
+				</tr>
+				
+			</tbody>
+
+		</table>
+
+
+
+		<footer th:replace="csap/fragments/page :: footer"></footer>
+	</body>
+
+</html>

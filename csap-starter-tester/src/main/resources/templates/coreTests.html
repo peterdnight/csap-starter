@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+
+
+		<title th:text="${ @csapInformation.name }"></title>
+
+		<script th:replace="~{ csap/fragments/libsAndStyles :: pageContent }"></script>
+
+		<script th:src="@{/js/helpers.js}"></script>
+
+		<style>
+			table.simple {
+				width: 80em;
+				margin-bottom: 3em;
+			}
+
+			table.simple td:nth-child(1) {
+				width: 15em;
+			}
+
+			table.simple td:nth-child(2) {
+				width: 5em;
+			}
+
+			header .noteAlt {
+				font-size: 0.7em;
+				margin: 0;
+				padding: 3px;
+			}
+			
+			textarea {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header th:replace="~{ csap/fragments/page :: header } "></header>
+
+		<table id="middleware" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">Middleware Integration</div> Click to
+						test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a id="dbConnectionTest" class="simple" th:href="@{/admin/health}">Database
+							Connection</a></td>
+					<td>test results</td>
+					<td>
+						<form id="dbConnectionForm" th:action="@{/spring-rest/testOracle}"
+							  method="POST">
+							Users:
+							<input name="user" value="" size="12"
+								   th:value="${dataSource.username}" />
+							Pass:
+							<input name="pass" value="" type="password" size="12"
+								   th:value="${dataSource.password}" />
+							query:
+							<input name="query" th:value="${query}" size="25" />
+							<br /> <span style="margin-left: 1em">url:</span>
+							<input name="url" value="" style="width: 80%"
+								   th:value="${dataSource.url}" />
+						</form>
+					</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/spring-app/spring}">JMS &amp;
+							JPA Tests</a></td>
+					<td>html</td>
+					<td>Connection:
+						<div class="noteAlt" th:text="${broker}"></div> <br /> Queue:
+						<div class="noteAlt" th:text="${queue}"></div>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<a class="simple" th:href="@{/jms/stats}">
+							JMS Stats
+						</a>
+					</td>
+					<td>HTML</td>
+					<td>Jms Statistics Checker</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/spring-rest/csAgentSampleRest}">CsAgent
+							Api</a></td>
+					<td>JSON</td>
+					<td>Invoke CsAgent API</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/spring-rest/showJmeterResults}">Jmeter Results</a></td>
+					<td>JSON</td>
+					<td>look in /jmeter-reports/_jmeter1End2End.html</td>
+				</tr>
+
+
+			</tbody>
+
+		</table>
+
+
+
+
+		<table id="jersey" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">Jersey Integration</div> Click to test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a class="simple" th:href="@{/jersey/simpleSpringRest}">jersey/simpleSpringRest</a></td>
+					<td>json</td>
+					<td>Spring Jersey REST framework w. Spring JPA injected</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/jersey/helloworld}">jersey/helloworld</a></td>
+					<td>JSON</td>
+					<td>Jersey hello world</td>
+				</tr>
+
+
+				<tr>
+					<td><a class="simple"
+						   th:href="@{/jersey/simpleSpringRest/testJerseyException}">testJerseyException</a></td>
+					<td>json</td>
+					<td>Jersey with exception mapper</td>
+				</tr>
+
+
+			</tbody>
+
+		</table>
+
+
+		<table id="resourceLimits" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">Host Resource Tests</div> Click to test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+ 
+				<tr>
+					<td>Disk Read/Write Test</td>
+
+					<td>text</td>
+					<td>
+						<div class="note">Trigger write and read of file</div> <br />
+
+
+						<form th:action="@{/spring-rest/diskTest}"
+							  style="display: inline-block">
+							<input type="submit" class="submit" value="Start" />
+							KB to Write:
+							<input name="numberOfKb" value="500" type="number" style="width: 4em"/>
+							Iterations: 
+							<input name="numberOfIterations" value="100" type="number"  style="width: 4em"/>
+						</form>
+
+					</td>
+				</tr>
+				
+				<tr>
+					<td>Test Open File Limits: <br/><a class="simple"
+													   th:href="@{/spring-rest/cleanFileDescriptors}">close previously
+							opened files</a></td>
+
+					<td>text</td>
+					<td>
+						<div class="note">Set the number of files to open. Limited by
+							ulimit -n. UI will report back how many it could actually open
+							before running out. Do not forget to run the close operation to
+							release them back to OS.</div> <br />
+
+
+						<form th:action="@{/spring-rest/leakFileDescriptors}"
+							  style="display: inline-block">
+							<input type="submit" class="submit" value="Open" />
+							Number Of Files:
+							<input name="numberToLeak" value="100" type="number" />
+						</form>
+
+					</td>
+				</tr>
+
+
+				<tr>
+					<td>Test Open Thread Limits: <br/><a class="simple"
+														 th:href="@{/spring-rest/cleanThread}">stop previously opened threads</a></td>
+
+					<td>text</td>
+
+					<td>
+						<div class="note">Set the number of threads to start. Limited
+							by ulimit -u. UI will report back how many it could actually open
+							before running out. Do not forget to run the close operation to
+							release them back to OS.</div> <br />
+
+						<form th:action="@{/spring-rest/startThreads}"
+							  style="display: inline-block">
+							<input type="submit" class="submit" value="Open" />
+							Number of Threads:
+							<input name="numberToLeak" value="100" type="number" />
+						</form>
+					</td>
+				</tr>
+
+
+				<tr>
+					<td>Test Memory Limits:<br/> <a class="simple"
+													th:href="@{/spring-rest/freeMemory}">release Memory</a>
+					</td>
+					<td>text</td>
+					<td>
+						<div class="note">Set the amount of memory to allocate as
+							strings in a heap. Limited by jvm -XMs and MX. Do not forget to
+							run the close operation to release them back to OS.</div> <br />
+
+
+						<form th:action="@{/spring-rest/leakMemory}" style="display: inline-block">
+							<input type="submit" class="submit" value="Allocate" />
+							MB on heap:
+							<input name="mbToLeak" value="10" type="number" />
+							Kb on heap:
+							<input name="kbToLeak" value="0" type="number" />
+						</form>
+					</td>
+				</tr>
+
+
+				<tr>
+					<td>Oracle Connection leaks: JVM Must be restarted to clear</td>
+					<td>text</td>
+					<td>
+						<form th:action="@{/spring-rest/testOracleHangConnection}">
+							<input type="submit" class="submit" value="Leak Connection" />
+							User:
+							<input name="user" value="ims_wkf_admin" size="12" />
+							Pass:
+							<input name="pass" value="ims_wkf_admin" type="password" size="12" />
+							url:
+							<input name="url" value="jdbc:oracle:oci8:@local_factory"
+								   size="28" />
+							query:
+							<input name="query" value="select 1 from dual" size="18" />
+						</form>
+
+					</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+		<table id="cache" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">@Cacheable Tests</div> Click to test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a class="simple" th:href="@{/admin/info}">tbd</a></td>
+					<td>text</td>
+					<td>SpringBoot Info</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+		
+		<table id="encryt" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">Encryption tests</div> Click to test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td>test java encrypt - run test based on jvm configuration</a></td>
+					<td>html</td>
+					<td>
+					
+					<form th:action="@{/encode}"
+							  style="">
+						<input type="submit" class="submit" value="encode" />
+						Item to decode:
+						<input name="stringToEncode" value="Simple string to encode" />(Current JVM)
+					</form>
+					<form th:action="@{/decode}"
+							  style="">
+						<input type="submit" class="submit" value="decode" />
+						Item to decode:
+						<input name="stringToDecode" value="kMp1cwWZ/4H5qQHxtbSX7rZU790Sr1HUYZDApx4FVqA=" />(JDK default weak encoding)
+					</form>
+					
+					<form th:action="@{/decode}"
+							  style="">
+						<input type="submit" class="submit" value="decode" />
+						Item to decode:
+						<input name="stringToDecode" value="5E2Bh0SeZ55EYi89qMSwcpIQbwtgNfikBDDAoU6aYcX6VDi7w7eYkA==" />(JDK strong encoding)
+					</form>
+					
+					</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+
+				
+
+		<table id="SpringMvc" class="simple">
+			<thead>
+
+				<tr>
+					<th><div class="title">Model View Controller</div> Click to
+						test</th>
+					<th>returns</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+					<td><a class="simple" th:href="@{/.}">Landing Page</a></td>
+					<td>html</td>
+					<td>SpringBoot View using Thymeleaf html5 template</td>
+				</tr>
+				
+				<tr>
+					<td><a class="simple" th:href="@{/missingTemplate}">Missing
+							Template</a></td>
+					<td>html</td>
+					<td>Thymeleaf exception for missing templatee</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/currentTime}">currentTime</a></td>
+					<td>text</td>
+					<td>Spring MVC returning plain text</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/testException}">testException</a></td>
+					<td>text</td>
+					<td>Spring MVC Exception Advice</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/addSessionVar}">addSessionVar</a></td>
+					<td>text</td>
+					<td>Spring MVC with session variable; note embedded tomcat can
+						optional persist over restarts, or distribute for stateless
+						containers via redis</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/spring-rest/sampleProtectedMethod}">sampleProtectedMethod</a></td>
+					<td>html</td>
+					<td>Spring Security - verify ACL access using CSAP SSO admin role</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" th:href="@{/testAclFailure}">testAclFailure</a></td>
+					<td>html</td>
+					<td>Spring Security - verify ACL deny message</td>
+				</tr>
+
+				<tr>
+					<td>Tomcat default post limit: 2MB. <a class="simple" href="http://stackoverflow.com/questions/33232849/increase-http-post-maxpostsize-in-spring-boot">To modify</a></td>
+					<td>html</td>
+					<td>
+						
+						<form th:action="@{/spring-rest/restParamPost}"
+							  method="post">
+
+							<textarea class="wide" name="doc">0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789</textarea>
+							<br/>Count:  <input name="count" value="10240"/>
+							<input type="submit" class="submit" value="Build Large Object to param post" />
+						</form>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>SpringMvc template posting an object to Jersey Rest Resource</td>
+					<td>html</td>
+					<td>
+
+						<form th:action="@{/spring-rest/restBodyPost}"
+							  method="post">
+
+							<textarea name="doc">0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789</textarea>
+							<br/>Count:  <input name="count" value="10240"/>
+							<input type="submit" class="submit" value="Build Large Object to body post" />
+						</form>
+
+
+					</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" target="_blank"
+						   th:href="@{/spring-rest/showSecureConfiguration}"> Secure
+							Properties</a></td>
+					<td>json</td>
+					<td>Show contents of secure property</td>
+				</tr>
+
+				<tr>
+					<td><a class="simple" target="_blank"
+						   th:href="@{/sleep/4}"> 
+						   Sleep 4 seconds
+						   </a></td>
+					<td>json</td>
+					<td>Test long running requests</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+
+
+
+		<footer th:replace="csap/fragments/page :: footer"></footer>
+	</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Error</title>
+
+
+<div th:replace="csap/fragments/libsAndStyles"></div>
+	
+
+<style>
+input {
+margin-right: 1em;
+}
+
+#summary .noteAlt {
+	display: inline;
+	font-size: 0.8em;
+	margin-right: 2em;
+	padding: 3px;
+}
+
+div.title{
+	line-height: 1em
+}
+
+#summary {
+	line-height: 2em
+}
+</style>
+</head>
+<body>
+
+
+	<header>Csap Error Page: <span class="" th:text="${timestamp }"></span></header>
+	<br/>
+	
+	
+	<section id="summary">
+		<div class="title">Summary</div>
+		
+		Request: <div class="noteAlt" th:text="${path }"></div>
+		<br/>
+		Message: <div class="noteAlt" th:text="${message }"></div>
+		<br/>
+		Http Status: <div class="noteAlt" th:text="${status}"></div>
+		Reason: <div class="noteAlt" th:text="${error }"></div>
+		Exception: <div class="noteAlt" th:text="${exception }"></div>
+	</section>
+	
+	<div  th:if="${trace}" style="margin: 1em; font-size: 0.8em">
+		Stack trace (Hide using server.error include-stacktrace.never)
+		<pre class="code" th:text="${trace}"></pre>
+	</div>
+
+
+	<footer th:replace="csap/fragments/page :: footer"></footer>
+
+</body>
+
+</html>

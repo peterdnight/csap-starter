@@ -1,0 +1,287 @@
+#
+#  Core configuration; application-<profile>.yml will selective overwrite if it exists
+#
+
+# Current active profiles; use desktop,embedded for full isolation. 
+# if embedded is removed , csap sandbox with oracle will be used. 
+# ociOracle - uses thick driver to locate
+spring.profiles.active: desktop,embedded
+
+
+# YML supports MULTIPLE documents in the same file; they are separated by ---
+
+
+---
+#
+#    Common Config
+#
+
+# Disable fallback to basic auth, use LDAP or not based on the above
+security.basic.enabled: false
+
+spring: 
+  resources:
+    cache-period: 28800  # 8 hours
+
+  activemq:
+    in-memory: false
+    
+
+  aop:
+    proxy-target-class: true  # aop used for performance
+    
+  thymeleaf:
+    mode: HTML
+    
+  jpa: 
+    database-platform: org.hibernate.dialect.HSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+
+#
+# Default - csap test service uses embedded hsql and embedded mq
+#
+
+my-service-configuration:
+  db:
+    driver-class-name: org.hsqldb.jdbcDriver
+    username: sa
+    password: 
+    max-active: 25
+    max-idle: 25
+    idle-eviction-ms: 10000
+    url: jdbc:hsqldb:mem:testdb
+    
+
+  jms:
+    enabled: true
+    server-url: vm://localhost?broker.persistent=false
+    max-messages-per-task: 1
+    concurrency: "1-30"
+    receive-timeout: 5000
+    burn-db-iterations: 20
+    burn-db-inserts: 1000
+    
+  locator: 
+    hello-provider: "BootEurekaDemo"
+    hello-api: "hello"
+
+  jms-backlog-health:
+    #  host: v01app-prd020
+    base-url: "http://HOST.yourcompany.com:8011/CsAgent/api/agent/collection/application/activemq_8161/30/"
+    backlogQ: /data/DeviceQBackloq
+    processedQ: /data/DeviceDispatched
+    sampleCount: 30
+    expression: "isQueueHung(#backlog, #processed)"   
+           
+
+    
+server:
+  port: 8090
+  context-path: /BootEnterprise
+  tomcat:
+    max-threads: 20
+  session:
+    persistent: false
+  error:
+    include-stacktrace: always
+    
+    
+# @CsapBootApplication
+csap: 
+  info:
+    name: "${csapName:MyDesktop}"
+    load-balancer-url: "${csapLbUrl:http://csap-secure.yourcompany.com}"
+    lifecycle: "${csapLife:dev}"
+    version: "${csapVersion:1.0-Desktop}"
+    port: "${csapHttpPort:8080}"
+    cluster: "${csapName:dev-desktop-1}"
+    
+  documentation:
+      enabled: true
+    
+  encryptable-properties:
+    enabled: true
+    property-files:
+      - csapSecurity.properties  # security
+      - appSecure.properties     # jms q names
+      - ${user.home}/csapSecurity.properties #overwrite the above if it exists
+      
+  web-server:
+    enabled: true
+    max-connections-ajp: 20
+    max-connections-http: 20
+    backlog: 1
+    ajp-secret: ${csapAjp:ThisWillBeReplaced}
+  
+  security:
+    enabled: true
+    ldap-enabled: true
+    rest-api-filter:
+      enabled: true
+      urls:
+        - "/demoUrl1/*"
+        - "/demoUrl2/*"
+        - "/helloWithRestAcl"
+      group: "$CSAP_ADMIN_GROUP"
+      cache-seconds: 300
+  
+  performance:
+    enabled: true
+    monitor-urls: 
+        - /
+        - /hello
+        - /spring-app/*
+        - /spring-rest/*
+        - /api/*
+        - /jersey/*
+        
+    alert:
+    
+      debug: false
+      
+      report:
+        frequency: 30
+        time-unit: SECONDS 
+      
+      remember-count: ${csapMaxBacklog:1000}
+      
+      throttle: 
+        count: 5
+        frequency: 1
+        time-unit: HOURS 
+      
+      notify: 
+        # addresses: "${csapAddresses:pnightin@yourcompany.com}"
+        frequency: "${csapFrequency:4}"
+        time-unit: "${csapTimeUnit:HOURS}"
+        
+      limits: 
+        - 
+          id: health.exceptions
+          ignore-null: true
+          occurences-max: 1
+          collect-time: 1
+          collect-units: MINUTES
+          
+          # simple db insert
+        - 
+          id: oracle.jdbc.sql.insert
+          ignore-null: true
+          mean-time:  10
+          mean-units: MILLISECONDS
+          max-time: 20
+          max-units: MILLISECONDS
+        - 
+          id: jms.SimpleJms.processRawMessageForTestScenarios()
+          ignore-null: true
+          mean-time:  50
+          mean-units: MILLISECONDS
+          max-time: 300
+          max-units: MILLISECONDS
+        
+        
+  locator:
+    enabled: true
+    active-urls-locator: "${csapLbUrl:https://csap-secure.yourcompany.com}/admin/api/service/urls/active/"
+    low-resources-url-locator: "${csapLbUrl:https://csap-secure.yourcompany.com}/admin/api/service/url/low/"
+    low-resource: "lowCpu"  #lowLoad, lowCpu, ...
+    
+
+
+
+# Spring Boot actuator exposes several endpoints, and csap security is used to authenticate
+management:
+  context-path: /devOps
+  security:
+    enabled: false
+ 
+
+# Spring actuator: info settings
+info:
+  build.profile: ${spring.profiles.active}
+  build.artifact: "Maven: @project.artifactId@"
+  build.name: "@project.name@"
+  build.description: "@project.description@"
+  build.version: "@project.version@"
+ 
+
+
+# ---
+#
+#    DEV
+#
+
+# spring:
+#    profiles: dev
+    
+#my-service-configuration:
+#  db:
+#    url: "jdbc:simon:oracle:oci8:@local_factory;SIMON_REAL_DRV=oracle.jdbc.driver.OracleDriver;SIMON_PREFIX=oracle.jdbc"
+  
+
+
+---
+#
+#  ================ desktop configuration
+#
+
+spring:
+  
+  profiles: desktop
+  
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: false
+    
+server:
+  context-path: /
+  
+      
+
+
+csap:
+  web-server.enabled: false
+  security: 
+    enabled: false
+    ldap-enabled: false   # requires csapSecurity.properties in your home dir 
+  encryptable-properties:
+    enabled: true
+    algorithm: PBEWITHMD5ANDDES 
+    property-files:
+      - appSecure.properties
+      - csapSecurity.properties
+      - ${user.home}/csapSecurity.properties #overwrite the above if it exists
+      
+# auto timing and performance, use: org.javasimon.jdbc4.Driver: 
+# jdbc:simon:oracle:thin:@csapdb-dev02.yourcompany.com:1521:dev02;SIMON_REAL_DRV=oracle.jdbc.driver.OracleDriver;SIMON_PREFIX=oracle.jdbc
+# jdbc:simon:oracle:thin:@csapdb-dev01.yourcompany.com:1521:dev01;SIMON_REAL_DRV=oracle.jdbc.driver.OracleDriver;SIMON_PREFIX=oracle.jdbc
+# oci: jdbc:simon:oracle:oci8:@local_factory;SIMON_REAL_DRV=oracle.jdbc.driver.OracleDriver;SIMON_PREFIX=oracle.jdbc
+#
+#
+# standard jdbc: oracle.jdbc.driver.OracleDriver:
+# jdbc:oracle:thin:@csapdb-dev01.yourcompany.com:1521:dev01 , jdbc:oracle:thin:@csapdb-dev02.yourcompany.com:1521:dev02
+# oci: jdbc:simon:oracle:oci8:@local_factory
+
+
+my-service-configuration:  
+  db:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: csap_test
+    password: csap_test
+    max-active: 50
+    url: "jdbc:oracle:thin:@csapdb-dev01.yourcompany.com:1521:dev01"
+
+  jms:
+    enabled: true
+    server-url: "tcp://csapdb-dev01.yourcompany.com:61616"
+    
+  jms-backlog-health:
+    # comment out host to disable health check
+    host: v01app-prd015
+
+

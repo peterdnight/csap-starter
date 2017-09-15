@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+
+
+	<head>
+
+		<title th:inline="text">  [[ ${ title } ]]</title>
+
+		<script th:replace="csap/fragments/libsAndStyles :: pageContent"></script>
+
+		<style>
+		
+			div.deprecated {
+				display: inline-block;
+				border: 1px solid black;
+				color: black;
+				margin: 0em;
+				padding: 3px;
+				min-width: 10em;
+				border-radius: 2px;
+				background-color: lightgoldenrodyellow;
+				text-align: center;
+			}
+
+			div.infoBlock {
+				padding: 0.25em;
+			}
+			div.infoBlock span.indent {
+				margin-left: 2em;
+			}
+
+			table.simple, div.info, a.simple, a.simple:hover {
+				font-family: "Source Code Pro",Menlo,Consolas,Monaco,monospace;
+			}
+			table td:nth-child(1) {
+				width: 15em;
+			}
+			table td:nth-child(1) a.simple {
+				display: block ;
+				margin-bottom: 1em;
+			}
+
+
+			table td:nth-child(2) {
+				width: 8em;
+			}
+			div.myCols {
+				-webkit-column-count: 3; /* Chrome, Safari, Opera */
+				-moz-column-count: 3; /* Firefox */
+				column-count: 3;
+			}
+
+			header .noteAlt {
+				font-size: 0.7em;
+				margin: 0;
+				padding: 3px;
+			}
+
+			header {
+				padding-top: 0.5em
+			}
+
+			.docLabel {
+				margin-top: 5px;
+				display: inline-block;
+			}
+
+			.docLabel textarea, input {
+				margin: 0;
+				line-height: 0.8em;
+				height: 1em;
+				width: 10em;
+				display: block;
+			}
+			.docLabel input {
+				line-height: 1em;
+				height: 2em;
+				overflow: visible;
+			}
+
+			.smallSubmit {    
+				display: block;
+				font-size: 0.8em;
+				line-height: 1em;
+				cursor: pointer;
+				max-width: 16em;
+			}
+			.smallSubmit:hover {
+
+			}
+
+			label.java {
+				display: inline-block;
+				font-weight: bold;
+				margin-left: 0;
+				margin-top: 0.5em;
+
+			}
+			form {
+				margin-bottom: 1em;
+			}
+
+			.meth {
+				margin-left: 2em;
+			}
+
+			div.info, table#status {
+				margin: 2em;
+				margin-right: 4em;
+
+			}
+
+			div.info div.header {
+				font-weight: bold;
+				font-size: 1.4em;
+			}
+
+			div.info div.noteHighlight {
+				margin-right: 5em;
+			}
+
+			img.csapDocImage, img.csapDocImageEnlarged {
+				border: 2px solid lightgray;
+				border-radius: 5px;
+				cursor: pointer;
+				margin: 1em;
+				padding: 0.5em;
+				width: 300px;
+				transition: all 1s;
+			}
+
+			img.csapDocImage:hover {
+				background-color: black;
+			}
+
+			img.csapDocImageEnlarged {
+				background-color: black;
+				position: absolute;
+				width: 800px;
+				z-index: 9999;
+				left: 2em;
+			}
+
+			div.autogen {
+				font-size: 0.7em;
+				font-style: italic;
+				position: absolute ;
+			}
+			
+			div.docIndex {
+				float: right;
+				margin-right: 1em;
+				font-size: 0.6em;
+			}
+
+		</style>
+
+
+		<script th:src="@{/js/simple.js}"  ></script>
+
+		<script>
+
+			$( document ).ready( function () {
+				$( "#csapPageLabel" ).hide();
+				$( "#csapPageVersion" ).css( "margin-left", "3em" );
+				$( "img.csapDocImage" )
+						.attr( "title", "Click to toggle display size" )
+						.click( function ( e ) {
+							$( this ).toggleClass( 'csapDocImageEnlarged' );
+						} );
+
+				$( "button.smallSubmit" ).click( function () {
+					alertify.error( "Submitting request. Page will auto-refresh on complete", 0 );
+					$( this ).parent().submit();
+				} );
+			} );
+
+
+		</script>
+
+
+	</head>
+
+	<body th:inline="text" >
+
+		<header th:replace="csap/fragments/page :: header"></header>
+
+		<div class="warning"
+			 th:if="${ error != null }">
+			[[ ${ error } ]]
+		</div>
+
+		<div class="autogen">Auto generated using @CsapDoc</div>
+
+		<div class="info">
+
+			<div class="header">[[ ${ title } ]]
+				<div class="docIndex"><a class="pushButton"  href="nav" title="View complete listing of apis">Documentation Index</a></div>
+			</div>
+			<div class=""> 
+				Class: <div class="noteHighlight">[[ ${ param.clazz[0] } ]]</div> 
+				Base Url: <div class="noteHighlight">[[ ${ baseUrl } ]] </div>
+			</div>
+
+			<div class="infoBlock" 
+				 th:each="docNote : ${ overview } " 
+				 th:utext="${ docNote }">
+			</div>
+
+		</div>
+
+		<table id="status" class="simple" >
+			<thead>
+
+				<tr>
+					<th> Click to test</th>
+					<th>returns</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+
+
+			<tbody>
+
+				<tr
+					th:each="apiDoc : ${apiDocs} ">
+					<td>
+						<div 
+							th:each="link : ${ apiDoc.getTests()}" >
+
+
+							<!--   GET apis -->
+							<div
+								th:if=" ${ link.postParams == null} ">
+
+								<a  th:if="${ link.params != null }"
+									class="simple" th:href="@{ ${link.url}(__${link.params}__)}" th:utext='${link.text}'></a>
+								<a  th:if="${ link.params == null }"
+									class="simple" th:href="@{ ${link.url} }" th:utext='${link.text}' ></a>
+
+							</div>
+							
+							
+
+							<!--   POST apis -->
+							<div
+								th:if=" ${ link.postParams != null && link.fileParams == null } ">
+
+								<form method="post" th:action="@{ ${link.url} }" >
+									<button class="smallSubmit pushButton"> [[ ${link.url} ]]</button>
+									<label class="docLabel"  th:each="postParamEntry : ${ link.postParams }  ">
+										[[ ${postParamEntry.key} ]]:
+										<textarea 
+											th:name="${postParamEntry.key}" 
+											>[[ ${postParamEntry.value} ]]</textarea>
+									</label>
+
+								</form>
+
+							</div>
+
+
+							<!--   POST apis with file params, multipart requests -->
+							<div
+								th:if=" ${ link.postParams != null && link.fileParams != null } ">
+
+								<form method="post" th:action="@{ ${link.url} }" enctype="multipart/form-data">
+									<button class="smallSubmit pushButton"> [[ ${link.url} ]] (MultiPart)</button>
+									<label class="docLabel"  th:each="fileParam : ${ link.fileParams }  ">
+										[[ ${ fileParam } ]]:
+										<input type="file"
+											th:name="${ fileParam }" />
+									</label>
+									<label class="docLabel"  th:each="postParamEntry : ${ link.postParams }  ">
+										[[ ${postParamEntry.key} ]]:
+										<textarea 
+											th:name="${postParamEntry.key}" 
+											>[[ ${postParamEntry.value} ]]</textarea>
+									</label>
+
+								</form>
+
+							</div>
+
+						</div>
+
+					</td>
+					<td>[[ ${ apiDoc.getProducesHtml() } ]]</td>
+					<td>
+
+
+						<div class="deprecated"
+								th:if=" ${ apiDoc.isDeprecated() } ">
+								Deprecated
+						</div>
+						<div class="infoBlock" 
+							 th:each="docNote : ${ apiDoc.getNotes() } " 
+							 th:utext="${ docNote }">
+						</div>
+
+
+						<label class="java">Java Method Name:</label> <span class="meth">[[ ${ apiDoc.getJavaMethodName() } ]]</span> 
+
+						<div th:if=" ${ apiDoc.getApiParams().length != 0 } ">
+							<label class="java">Parameters:</label>
+							<div class="myCols">
+								<div style="" th:each="paramName : ${ apiDoc.getApiParams() }"> [[ ${ paramName } ]]
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+
+
+
+			</tbody>
+
+		</table>
+
+		<footer th:replace="csap/fragments/page :: footer"></footer>
+	</body>
+
+</html>

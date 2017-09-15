@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.8.2.201610040608-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>java:org.sample.BootEnterpriseApplication</config>
+		<config>java:org.sample.HealthMonitor</config>
+		<config>java:org.sample.locator.HelloClient</config>
+		<config>java:org.sample.input.http.jersey.HelloJaxrsResource</config>
+		<config>java:org.sample.BootEnterpriseApplication$JerseyConfig</config>
+		<config>java:org.sample.input.http.jersey.JerseyResource</config>
+		<config>java:org.sample.JmsConfig</config>
+		<config>java:org.sample.input.jms.SimpleJms</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

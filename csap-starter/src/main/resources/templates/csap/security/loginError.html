@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<meta http-equiv="Cache-Control" content="no-cache" />
+<!--  insane hack for IE to support html5 -->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+
+
+<title>FailedLoginPage</title>
+
+
+
+<div th:replace="csap/fragments/libsAndStyles"></div>
+	
+	
+<style>
+input {
+	margin-right: 1em;
+}
+</style>
+
+</head>
+
+<body>
+
+	<header>
+		<span th:text="${serviceName}"></span> Failed Login Page
+		<div>
+			Version: <span th:text="${serviceVersion}"></span>
+		</div>
+	</header>
+
+	<br />
+
+
+
+	<section
+		style="position: absolute; left: 50%; top: 50%; margin-left: -15em; margin-top: -5em;">
+		<div class="title">Authentication Error</div>
+
+
+		<div class="note">Validate your password again</div>
+
+		<a class="formButton" href="login">Try again</a>
+
+
+	</section>
+
+
+
+</body>
+</html>

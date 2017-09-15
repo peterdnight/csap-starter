@@ -1,0 +1,48 @@
+#
+#
+#  download latest oracle instant driver, configure environment variables
+#  - set ORACLE_HOME,TNS_ADMIN, LD_LIBRARY_PATH env to install folder
+#  - set CLASS_PATH to $ORACLE_HOME/*jdbc.jar
+#  - set dbPass to be password
+#  - get working ldap.ora and sqlnet.ora for your infra. Set TNS_ADMIN env
+#  
+#  Windows: use PATH instead of LD_LIBRARY_PATH
+#
+
+# In memory authentication uses csapSecurityMemory.txt 
+csap:
+  security: 
+    enabled: false
+    ldap-enabled: false 
+
+
+server:
+  context-path: /
+  
+# Embedded JMS & orace oci DB
+spring:
+  
+  activemq:
+    in-memory: true
+    pooled: false
+    
+  
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: false
+
+my-service-configuration:
+  db:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: ims_wkf_admin
+    password: ${dbPass:CHANGE_ME}
+    max-active: 50
+    url: "jdbc:oracle:oci8:@cafi7dev"
+  jms:
+    enabled: true
+    server-url: vm://localhost?broker.persistent=false
+
+    
+    

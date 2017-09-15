@@ -1,0 +1,210 @@
+
+body .alertify-cover, body .alertify {
+	z-index: 5000;
+}
+
+.alertify.ajs-resizable:not (.ajs-maximized ) .ajs-dialog {
+	min-width: 800px;
+}
+
+.alertify-notifier .ajs-message {
+	width: 800px;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+	color: black;
+	text-shadow: none;
+}
+
+.alertify .ajs-dialog {
+	max-width: 80%;
+}
+
+.alertify-notifier .ajs-message.ajs-error {
+	color: black;
+	text-shadow: none;
+}
+
+.alertify-notifier .ajs-message {
+	width: 600px;
+}
+
+.alertify.ajs-resizable .ajs-body .ajs-content, .alertify.ajs-maximized .ajs-body .ajs-content
+	{
+	top: 35px;
+	left: 14px;
+	right: 4px;
+	padding: 0;
+}
+
+.alertify.ajs-frameless .ajs-body .ajs-content {
+	top: 3px;
+}
+
+.alertify .ajs-body .ajs-content {
+	padding: 10px;
+}
+
+.alertify .ajs-footer .ajs-buttons.ajs-primary {
+	text-align: center;
+	background-color: #ddeeff;
+}
+
+.alertify .ajs-dimmer {
+	background-color: rgba(0, 0, 0, 0.75);
+	opacity: 0.8;
+}
+
+.alertify.ajs-resizable .ajs-commands, .alertify.ajs-maximized .ajs-commands
+	{
+	margin: -0px 14px 0 0;
+}
+
+.alertify .ajs-commands {
+	margin: -22px 14px 0 0;
+}
+
+.alertify .ajs-header, .alertify.ajs-resizable .ajs-header, .alertify.ajs-maximized .ajs-header
+	{
+	padding: 8px;
+	background-color: #ddeeff;
+	font-size: 1em;
+}
+
+.alertify .ajs-footer {
+	padding: 5px;
+	font-size: 0.8em;
+	background-color: #ddeeff;
+}
+
+.alertify .ajs-dialog {
+	font-size: 0.8em;
+	border: 2px solid #6ba8e5;
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button {
+    min-height: 1em;
+    min-width: 15em;
+    padding: 7px;
+}
+
+.alertify .ajs-footer {
+    min-height: 1em;
+}
+
+.alertify .ajs-dialog {
+    min-height: 3em;
+}
+
+
+.ui.positive.button, .ui.positive.buttons .button {
+	background-color: #5bbd72 !important;
+	color: #fff;
+}
+
+.ui.positive.button.active, .ui.positive.button:hover, .ui.positive.buttons .active.button,
+	.ui.positive.buttons .button:hover {
+	background-color: #58cb73 !important;
+	color: #fff;
+}
+
+.ui.positive.button:active, .ui.positive.buttons .button:active {
+	background-color: #4cb164 !important;
+	color: #fff;
+}
+
+.ui.negative.button, .ui.negative.buttons .button {
+	background-color: #d95c5c !important;
+	color: #fff;
+}
+
+.ui.negative.button.active, .ui.negative.button:hover, .ui.negative.buttons .active.button,
+	.ui.negative.buttons .button:hover {
+	background-color: #e75859 !important;
+	color: #fff;
+}
+
+.ui.negative.button:active, .ui.negative.buttons .button:active {
+	background-color: #d24b4c !important;
+	color: #fff;
+}
+
+
+.ui.black.button, .ui.black.buttons .button {
+	background-color: #5c6166;
+	color: #fff;
+}
+
+.ui.black.button:hover, .ui.black.buttons .button:hover {
+	background-color: #4c4c4c;
+	color: #fff;
+}
+
+.ui.black.button:active, .ui.black.buttons .button:active {
+	background-color: #333;
+	color: #fff;
+}
+
+.ui.green.button, .ui.green.buttons .button {
+	background-color: #5bbd72;
+	color: #fff;
+}
+
+.ui.green.button.active, .ui.green.button:hover, .ui.green.buttons .active.button,
+	.ui.green.buttons .button:hover {
+	background-color: #58cb73;
+	color: #fff;
+}
+
+.ui.green.button:active, .ui.green.buttons .button:active {
+	background-color: #4cb164;
+	color: #fff;
+}
+
+.ui.red.button, .ui.red.buttons .button {
+	background-color: #d95c5c;
+	color: #fff;
+}
+
+.ui.red.button.active, .ui.red.button:hover, .ui.red.buttons .active.button,
+	.ui.red.buttons .button:hover {
+	background-color: #e75859;
+	color: #fff;
+}
+
+.ui.red.button:active, .ui.red.buttons .button:active {
+	background-color: #d24b4c;
+	color: #fff;
+}
+.ui.button2 {
+	-moz-user-select: none;
+	background-color: #fafafa;
+	background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
+	border: medium none;
+	border-radius: 0.25em;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+	box-sizing: border-box;
+	color: gray;
+	cursor: pointer;
+	display: inline-block;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 1;
+	margin: 0;
+	min-height: 0.5em;
+	outline: 0 none;
+	padding: 0.8em 1.5em;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: opacity 0.25s ease 0s, background-color 0.25s ease 0s, color
+		0.25s ease 0s, background 0.25s ease 0s, box-shadow 0.25s ease 0s;
+	vertical-align: middle;
+}
+
+.ui.button {
+	text-transform: uppercase;
+	border-radius: 1em;
+	font-weight: bold ;
+	cursor: pointer;
+}

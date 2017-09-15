@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<head>
+
+<!--  insane hack for IE to support html5 -->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<title>CsapUser.js Test Page</title>
+
+<script src="CsapUser.js"></script>
+<script src="../jquery-2.1.4.js"></script>
+<script src="../jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="../../styleSheets/nextGen.css"
+	type="text/css" media="screen">
+
+
+<link href="../alertify.js-0.3.11/themes/alertify.core.css"
+	rel="stylesheet" type="text/css" media="screen" />
+<link href="../alertify.js-0.3.11/themes/alertify.default.css"
+	rel="stylesheet" type="text/css" media="screen" />
+<script src="../alertify.js-0.3.11/lib/alertify.js"></script>
+
+<script>
+
+$.ajaxSetup({
+	cache : false,
+	traditional : true
+	// traditional is critical for servlet based param processing. 
+//		timeout : deployTimeout, never timeout
+});
+
+var csapUser = new CsapUser();
+$(document).ready(function() {
+	console.log("Initializing test code") ;
+
+	$("#getUserNames").click(function() {
+		csapUser.getUserNames( $("#userids").val().split(",") , sampleCallback) ;
+		return false; // prevents link
+	});
+	
+
+	$("#getUserInfo").click(function() {
+		csapUser.getUserInfo( $("#userid").val().trim() , sampleCallback) ;
+		return false; // prevents link
+	});
+	
+
+	$("#getUserInfoHtml").click(function() {
+		csapUser.getUserInfo( $("#useridHtml").val().trim() , null) ;
+		return false; // prevents link
+	});
+	
+
+	$("#updateUserCol").click(function() {
+		var delay=500;
+		csapUser.onHover( $("table tbody tr td:nth-child(2)") , delay) ;
+		return false; // prevents link
+	});
+	
+	$("button").hover(
+			function() {
+				$( this ).css("text-decoration", "underline") ;
+				$(this).css('cursor', 'pointer');
+			}, function() {
+				$( this ).css("text-decoration", "none") ;
+				$(this ).css('cursor', 'default');
+			}
+		);
+});
+
+function sampleCallback( resultsJson ) {
+	console.log("sampleCallback: " + JSON.stringify( resultsJson ));
+	$(".note").empty() ;
+	$.each(resultsJson, function( index, value ) {
+		// alert( index + ": " + value );
+		$(".note").append("userid: " + index + " name:" + value + "<br>")
+	});
+}
+
+</script>
+
+<style>
+button {
+	width: 10em;
+}
+
+td {
+	width: 10em;
+}
+
+#csapUser {
+	font-size: 0.8em;
+}
+
+#csapUser .cLabel {
+	text-align: right;
+	width: 5em;
+	display: inline-block;
+	padding-right: 1em;
+	margin-bottom: 0.25em;
+}
+
+#csapUser .value {
+	width: 8em;
+	display: inline-block;
+	padding-right: 1em;
+}
+</style>
+
+</head>
+
+<body>
+	<header id="header">CsapUser.js Test Page</header>
+
+	<section>
+		<div class="title">Api Tester</div>
+		<br>
+		<button id="getUserNames">getUserNames</button>
+		<input id="userids" value="pnightin,paranant,nonExistUserid"
+			style="width: 30em"><br>
+
+		<button id="getUserInfo">getUserInfo</button>
+		<input id="userid" value="pnightin" style="width: 10em"> <br>
+
+		<button id="getUserInfoHtml">getUserInfoHtml</button>
+		<input id="useridHtml" value="pnightin" style="width: 10em"> <br>
+
+		<div class="note">Select an operation above</div>
+	</section>
+
+	<section>
+		<div class="title">Tables With Hover</div>
+		<button id="updateUserCol">update userid Column</button>
+		<table class="bordered"
+			style="font-size: 0.8em; display: inline-block">
+			<thead>
+
+				<tr>
+					<th class="col1">item</th>
+					<th>userid</th>
+					<th>description</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>pnightin</td>
+					<td>some notes</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>paranant</td>
+					<td>some notes</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>nonExistUserid</td>
+					<td>some notes</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>System</td>
+					<td>some notes</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</section>
+</body>
+
+</html>

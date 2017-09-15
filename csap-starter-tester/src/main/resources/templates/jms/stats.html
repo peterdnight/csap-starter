@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+
+		<title> JMS Backlog Portal</title>
+
+		<script th:replace="~{ csap/fragments/libsAndStyles :: pageContent }"></script>
+
+<script th:inline="javascript">
+var baseUrl=[[@{ jms }]] ;
+var imagesBase=[[@{ /images }]] ;
+</script>
+
+		<script th:src="@{ /js/csapLibs/commonJQ.js }"></script>
+		<script
+			data-th-attr="data-main=@{ ${@mvcResourceUrlProvider.getForLookupPath('/js/jms/stats.js')}   }"
+			th:src="@{/webjars/requirejs/2.1.20/require.min.js}"></script>
+
+
+		<style>
+			table.simple {
+				width: 80em;
+				margin-bottom: 3em;
+			}
+
+			table.simple td:nth-child(1) {
+				width: 15em;
+			}
+
+			table.simple td:nth-child(2) {
+				width: 5em;
+			}
+
+			header a {
+				position: absolute;
+				left: 10px;
+				font-size: 0.8em;
+			}
+
+			#ajaxResults, #inlineResults {
+				display: none;
+			}
+
+			div.noteAlt {
+				font-size: 0.8em;
+				position: absolute;
+				right: 10px;
+				top: 1px;
+			}
+			
+			#selection label {
+				display: inline-block;
+				width: 20em;
+			}
+		
+			#hungDiv label {
+				display: inline-block;
+				width: 20em;
+				}
+				
+			.qStatsLabel {
+				display: inline-block;
+				width: 7em;
+			}
+			.qStats {
+				display: inline-block;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+
+		<header th:replace="~{ csap/fragments/page :: header } "></header>
+		
+		<section id="selection">
+			<label>
+				Host Pattern: <input id="hostPattern" value="v01app-prd0**"/>
+			</label>
+			<label>
+				Host Count: <input id="hostCount" value="35" style="width: 2em"/>
+			</label>
+			<br/>
+			<label title="the number of 30 second samples to examine">
+				Samples: 	  <input id="sampleCount" value="5" style="width:2em"/>(minutes)
+			</label>
+			<label>
+				Backlog Q: 	  <input id="backlogQ" th:value="${ healthSettings.backlogQ }" style=""/>
+			</label>
+			<label>
+				Processing Q: <input id="processedQ" th:value="${ healthSettings.processedQ }" style=""/>
+			</label>
+			<br/>
+			<label style="width: 40em">
+				Expression: <input id="expression" th:value="${ healthSettings.expression }" style="width: 30em"/>
+			</label>
+			<br/>
+			<button id="queryButton" class="pushButton">Perform Query</button>
+		</section>
+		
+		<div id="results" style="display: none">
+			<div id="hungDiv" class="info" style="margin: 2em;">
+			
+				Hung Hosts:<br/>
+				 <div id="hungHosts"></div>
+			</div>
+			
+			<table id="hostReports" class="bordered tablesorter  tablesorter-csapSummary" style="width: auto; margin-right: 4em">
+				<thead>
+					<tr>
+						<th style="min-width: 12em">Host</th>
+						<th class="sorter-raw" >Queue Status</th>
+						<th>Samples Collected</th>
+					</tr>
+				</thead>
+				<tbody class="loadingBody" >
+					<tr>
+						<td colspan="99">
+							<div class="loadingLargePanel">Querying Hosts</div>
+						</td>
+					</tr>
+				</tbody>
+				<tbody id="hostReportBody">
+
+				</tbody>
+	
+			</table>
+		
+		</div>
+		
+		<footer th:replace="csap/fragments/page :: footer"></footer>
+	</body>
+
+</html>

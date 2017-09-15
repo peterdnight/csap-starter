@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+
+		<!--  insane hack for IE to support html5 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<title>CsapUser.js Test Page</title>
+
+		<script th:replace="~{ csap/fragments/libsAndStyles :: pageContent }"></script>
+
+		<script th:replace="~{ csap/fragments/jqplot-includes :: pageContent }"></script>
+
+
+		<script th:src="@{ /js/csapLibs/commonJQ.js }"></script>
+		<script th:src="@{ /js/csapLibs/csapUtils/CsapUser.js }"></script>
+
+		<script>
+
+			$.ajaxSetup( {
+				cache: false,
+				traditional: true
+						// traditional is critical for servlet based param processing. 
+						//		timeout : deployTimeout, never timeout
+			} );
+
+			var csapUser = new CsapUser();
+			$( document ).ready( function () {
+				console.log( "Initializing test code" );
+
+				$( "#getUserNames" ).click( function () {
+					csapUser.getUserNames( $( "#userids" ).val().split( "," ), sampleCallback );
+					return false; // prevents link
+				} );
+
+
+				$( "#getUserInfo" ).click( function () {
+					csapUser.getUserInfo( $( "#userid" ).val().trim(), sampleCallback );
+					return false; // prevents link
+				} );
+
+
+				$( "#getUserInfoHtml" ).click( function () {
+					csapUser.getUserInfo( $( "#useridHtml" ).val().trim(), null );
+					return false; // prevents link
+				} );
+
+
+				$( "#updateUserCol" ).click( function () {
+					var delay = 500;
+					csapUser.onHover( $( "table tbody tr td:nth-child(2)" ), delay );
+					return false; // prevents link
+				} );
+
+				$( "button" ).hover(
+						function () {
+							$( this ).css( "text-decoration", "underline" );
+							$( this ).css( 'cursor', 'pointer' );
+						}, function () {
+					$( this ).css( "text-decoration", "none" );
+					$( this ).css( 'cursor', 'default' );
+				}
+				);
+			} );
+
+			function sampleCallback( resultsJson ) {
+				console.log( "sampleCallback: " + JSON.stringify( resultsJson ) );
+				$( ".note" ).empty();
+				$.each( resultsJson, function ( index, value ) {
+					// alert( index + ": " + value );
+					$( ".note" ).append( "userid: " + index + " name:" + value + "<br>" )
+				} );
+			}
+
+		</script>
+
+		<style>
+			button {
+				width: 10em;
+			}
+
+			td {
+				width: 10em;
+			}
+
+			#csapUser {
+				font-size: 0.8em;
+			}
+
+			#csapUser .cLabel {
+				text-align: right;
+				width: 5em;
+				display: inline-block;
+				padding-right: 1em;
+				margin-bottom: 0.25em;
+			}
+
+			#csapUser .value {
+				width: 8em;
+				display: inline-block;
+				padding-right: 1em;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header id="header">CsapUser.js Test Page</header>
+
+		<section>
+			<div class="title">Api Tester</div>
+			<br>
+				<button id="getUserNames">getUserNames</button>
+				<input id="userids" value="pnightin,paranant,nonExistUserid"
+					   style="width: 30em"><br>
+
+						<button id="getUserInfo">getUserInfo</button>
+						<input id="userid" value="pnightin" style="width: 10em"> <br>
+
+								<button id="getUserInfoHtml">getUserInfoHtml</button>
+								<input id="useridHtml" value="pnightin" style="width: 10em"> <br>
+
+										<div class="note">Select an operation above</div>
+										</section>
+
+										<section>
+											<div class="title">Tables With Hover</div>
+											<button id="updateUserCol">update userid Column</button>
+											<table class="bordered"
+												   style="font-size: 0.8em; display: inline-block">
+												<thead>
+
+													<tr>
+														<th class="col1">item</th>
+														<th>userid</th>
+														<th>description</th>
+													</tr>
+												</thead>
+
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>pnightin</td>
+														<td>some notes</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>paranant</td>
+														<td>some notes</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>nonExistUserid</td>
+														<td>some notes</td>
+													</tr>
+													<tr>
+														<td>1</td>
+														<td>System</td>
+														<td>some notes</td>
+													</tr>
+												</tbody>
+
+											</table>
+										</section>
+										</body>
+
+										</html>
