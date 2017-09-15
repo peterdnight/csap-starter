@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.sample.jpa.Demo_DataAccessObject;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
-@RequestMapping(BootEnterpriseApplication.API_URL)
+@RequestMapping(Csap_Tester_Application.API_URL)
 public class ApiRoot {
 
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -80,7 +80,7 @@ public class ApiRoot {
 
 	
 
-	@Cacheable(BootEnterpriseApplication.SIMPLE_CACHE_EXAMPLE)
+	@Cacheable(Csap_Tester_Application.SIMPLE_CACHE_EXAMPLE)
 	@RequestMapping(value = "/simpleCacheExample", produces = MediaType.APPLICATION_JSON)
 	public ObjectNode simpleCached(@RequestParam(value = "key", defaultValue = "peter") String key) {
 
@@ -103,7 +103,7 @@ public class ApiRoot {
 	 * @return
 	 */
 	
-	@Cacheable(value=BootEnterpriseApplication.SIMPLE_CACHE_EXAMPLE, key="{#path1, #path2, #key}")
+	@Cacheable(value=Csap_Tester_Application.SIMPLE_CACHE_EXAMPLE, key="{#path1, #path2, #key}")
 	@RequestMapping(value = "/customKeyExample/{path1}/{path2}", produces = MediaType.APPLICATION_JSON)
 	public ObjectNode customKeyExample(
 			@PathVariable("path1") String path1,
@@ -128,7 +128,7 @@ public class ApiRoot {
 	
 	
 
-	@Cacheable(BootEnterpriseApplication.TIMEOUT_CACHE_EXAMPLE)
+	@Cacheable(Csap_Tester_Application.TIMEOUT_CACHE_EXAMPLE)
 	@RequestMapping(value = "/cacheWithTimeout", produces = MediaType.APPLICATION_JSON)
 	public ObjectNode cacheWithTimeout() {
 

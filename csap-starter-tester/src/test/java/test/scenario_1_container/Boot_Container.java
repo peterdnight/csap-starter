@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.sample.jpa.Demo_DataAccessObject;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import a_setup.InitializeLogging;
 
 @RunWith ( SpringRunner.class )
-@SpringBootTest ( classes = BootEnterpriseApplication.class )
+@SpringBootTest ( classes = Csap_Tester_Application.class )
 @ActiveProfiles ( "junit" )
 public class Boot_Container {
 	final static private Logger logger = LoggerFactory.getLogger( Boot_Container.class );

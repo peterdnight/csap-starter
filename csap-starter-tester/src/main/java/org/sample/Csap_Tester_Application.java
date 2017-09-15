@@ -44,13 +44,13 @@ import org.springframework.web.servlet.resource.VersionResourceResolver;
 @CsapMicroService
 @ConfigurationProperties ( prefix = "my-service-configuration" )
 @Aspect
-public class BootEnterpriseApplication extends WebMvcConfigurerAdapter {
+public class Csap_Tester_Application extends WebMvcConfigurerAdapter {
 
-	final static Logger logger = LoggerFactory.getLogger( BootEnterpriseApplication.class );
+	final static Logger logger = LoggerFactory.getLogger( Csap_Tester_Application.class );
 
 	public static void main ( String[] args ) {
 
-		SpringApplication.run( BootEnterpriseApplication.class, args );
+		SpringApplication.run( Csap_Tester_Application.class, args );
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class BootEnterpriseApplication extends WebMvcConfigurerAdapter {
 	@Bean
 	public TaskScheduler taskScheduler () {
 		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-		scheduler.setThreadNamePrefix( BootEnterpriseApplication.class.getSimpleName() + "@Scheduler" );
+		scheduler.setThreadNamePrefix( Csap_Tester_Application.class.getSimpleName() + "@Scheduler" );
 		scheduler.setPoolSize( 1 );
 		return scheduler;
 	}
@@ -176,7 +176,7 @@ public class BootEnterpriseApplication extends WebMvcConfigurerAdapter {
 	@Bean(ASYNC_EXECUTOR)
 	public TaskExecutor taskExecutor () {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		taskExecutor.setThreadNamePrefix( BootEnterpriseApplication.class.getSimpleName() + "@Async" );
+		taskExecutor.setThreadNamePrefix( Csap_Tester_Application.class.getSimpleName() + "@Async" );
 		taskExecutor.setMaxPoolSize( 5 );
 		taskExecutor.setQueueCapacity( 100 );
 		taskExecutor.afterPropertiesSet();

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.jpa.Demo_DataAccessObject;
 import org.sample.jpa.JobSchedule;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ import a_setup.InitializeLogging;
  * 
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest ( classes = BootEnterpriseApplication.class )
+@SpringBootTest ( classes = Csap_Tester_Application.class )
 @ActiveProfiles("junit")
 @Transactional
 public class DAO_With_Embedded_DB {

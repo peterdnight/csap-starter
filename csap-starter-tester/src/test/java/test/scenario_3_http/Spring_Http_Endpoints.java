@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import a_setup.InitializeLogging;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest ( classes = BootEnterpriseApplication.class )
+@SpringBootTest ( classes = Csap_Tester_Application.class )
 @WebAppConfiguration
 @ActiveProfiles("junit")
 public class Spring_Http_Endpoints {
@@ -101,7 +101,7 @@ public class Spring_Http_Endpoints {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.API_URL + "/simpleCacheExample" )
+				get( Csap_Tester_Application.API_URL + "/simpleCacheExample" )
 						.param( "key", TEST_TOKEN )
 						.accept( MediaType.APPLICATION_JSON ) );
 
@@ -124,7 +124,7 @@ public class Spring_Http_Endpoints {
 		assertTrue( message, responseJsonNode.get( "key" ).asText().equals( TEST_TOKEN ) );
 
 		resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.API_URL + "/simpleCacheExample" )
+				get( Csap_Tester_Application.API_URL + "/simpleCacheExample" )
 						.param( "key", TEST_TOKEN )
 						.accept( MediaType.APPLICATION_JSON ) );
 
@@ -152,7 +152,7 @@ public class Spring_Http_Endpoints {
 		logger.info( InitializeLogging.TC_HEAD + "simple mvc test" );
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGREST_URL + "/hello" )
+				get( Csap_Tester_Application.SPRINGREST_URL + "/hello" )
 						.param( "sampleParam1", "sampleValue1" )
 						.param( "sampleParam2", "sampleValue2" )
 						.accept( MediaType.TEXT_PLAIN ) );
@@ -175,7 +175,7 @@ public class Spring_Http_Endpoints {
 		logger.info( InitializeLogging.TC_HEAD + "simple mvc test for java 8" );
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGREST_URL + "/helloJava8" )
+				get( Csap_Tester_Application.SPRINGREST_URL + "/helloJava8" )
 						.param( "sampleParam1", "sampleValue1" )
 						.param( "sampleParam2", "sampleValue2" )
 						.accept( MediaType.TEXT_PLAIN ));

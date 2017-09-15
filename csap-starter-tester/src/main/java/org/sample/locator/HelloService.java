@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.csap.docs.CsapDoc;
 import org.csap.integations.CsapInformation;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class HelloService {
 	public String decode ( String stringToDecode ) {
 
 		logger.info( "decodeString: {}", stringToDecode );
-		if ( !BootEnterpriseApplication.isRunningOnDesktop() ) {
+		if ( !Csap_Tester_Application.isRunningOnDesktop() ) {
 			return "Security Violoation: Decode only allowed on desktop envs" ;
 		} else {
 

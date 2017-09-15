@@ -58,7 +58,7 @@ public class CoreTestsDashboard {
 		
 		springViewModel.addAttribute( "broker", broker );
 		springViewModel.addAttribute( "queue", queue );
-		springViewModel.addAttribute( "JAPI_URL", BootEnterpriseApplication.JERSEY_URL );
+		springViewModel.addAttribute( "JAPI_URL", Csap_Tester_Application.JERSEY_URL );
 		springViewModel.addAttribute( "context", "/BootEnterprise" );
 
 		return "coreTests";

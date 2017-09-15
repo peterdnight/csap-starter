@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.sample.jpa.Demo_DataAccessObject;
 import org.sample.jpa.JobSchedule;
@@ -71,7 +71,7 @@ import a_setup.InitializeLogging;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@SpringBootTest ( classes = BootEnterpriseApplication.class )
+@SpringBootTest ( classes = Csap_Tester_Application.class )
 @ActiveProfiles("junit")
 @Transactional
 public class Http_To_Embedded_DB {
@@ -169,7 +169,7 @@ public class Http_To_Embedded_DB {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.API_URL + "/showTestDataJson" )
+				get( Csap_Tester_Application.API_URL + "/showTestDataJson" )
 						.param( "filter", TEST_TOKEN )
 						.accept( MediaType.APPLICATION_JSON ) );
 
@@ -201,7 +201,7 @@ public class Http_To_Embedded_DB {
 
 		// mock validates http response code and that mvc attribute was created
 		MvcResult mvcResult = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGAPP_URL + "/showTestData" )
+				get( Csap_Tester_Application.SPRINGAPP_URL + "/showTestData" )
 						.param( "filter", TEST_TOKEN ).accept( MediaType.TEXT_HTML ) )
 				.andExpect( status().isOk() )
 				.andExpect( model().attributeExists( "result" ) )
@@ -223,7 +223,7 @@ public class Http_To_Embedded_DB {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGREST_URL + "/getRecordCountEz" )
+				get( Csap_Tester_Application.SPRINGREST_URL + "/getRecordCountEz" )
 						.param( "filter", TEST_TOKEN )
 						.accept( MediaType.APPLICATION_JSON ) );
 
@@ -254,7 +254,7 @@ public class Http_To_Embedded_DB {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGREST_URL + "/showSecureConfiguration" )
+				get( Csap_Tester_Application.SPRINGREST_URL + "/showSecureConfiguration" )
 						.accept( MediaType.APPLICATION_JSON ) );
 
 		// But you could do full parsing of the Json result if needed
@@ -294,7 +294,7 @@ public class Http_To_Embedded_DB {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.SPRINGREST_URL + "/addBulkData" )
+				get( Csap_Tester_Application.SPRINGREST_URL + "/addBulkData" )
 						.param( "filter", TEST_TOKEN )
 						.param( "message", "Junittest" )
 						.param( "count", "5" )
@@ -338,7 +338,7 @@ public class Http_To_Embedded_DB {
 
 		// mock does much validation.....
 		ResultActions resultActions = mockMvc.perform(
-				get( BootEnterpriseApplication.API_URL + "/showTestDataJson" )
+				get( Csap_Tester_Application.API_URL + "/showTestDataJson" )
 						.param( "filter", TEST_TOKEN )
 						.param( "pageSize", "50" )
 						.param( "count", "5" )

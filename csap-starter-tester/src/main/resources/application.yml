@@ -247,7 +247,7 @@ server:
 csap:
   web-server.enabled: false
   security: 
-    enabled: false
+    enabled: true
     ldap-enabled: false   # requires csapSecurity.properties in your home dir 
   encryptable-properties:
     enabled: true

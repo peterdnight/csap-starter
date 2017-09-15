@@ -1,0 +1,139 @@
+2017-09-15 15:52:58,368 ==== TomcatEmbeddedServletContainer.java ==== thread: restartedMain ==== INFO    >
+org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.initialize() => [] (line: 89)
+	Tomcat initialized with port(s): 8090 (http)
+
+2017-09-15 15:52:59,040 ==== Csap_Tester_Application.java ==== thread: localhost-startStop-1 ==== WARN    >
+org.sample.Csap_Tester_Application.helloDataSource() => [] (line: 269)
+	Password is not encrypted. Use CSAP encrypt to generate
+
+2017-09-15 15:52:59,042 ==== Csap_Tester_Application.java ==== thread: localhost-startStop-1 ==== WARN    >
+org.sample.Csap_Tester_Application.helloDataSource() => [] (line: 293)
+	
+
+ ==========================
+ Constructed DB Connection Pool with: 
+ Url: jdbc:hsqldb:mem:testdb
+ getUsername: sa
+ getMaxWait: 500
+ Time before marked idle: 10000
+ getTimeBetweenEvictionRunsMillis: 10000
+ Max Idle Connections: 25
+ Max Total Connections: 5
+ getInitialSize: 0
+ 
+==========================
+
+
+
+2017-09-15 15:53:01,010 ==== Csap_Tester_Application.java ==== thread: localhost-startStop-1 ==== WARN    >
+org.sample.Csap_Tester_Application$JerseyConfig.<init>() => [] (line: 242)
+	Using jersey explicit registration
+
+2017-09-15 15:53:01,982 ==== JmsConfig.java ==== thread: restartedMain ==== WARN    >
+org.sample.JmsConfig.printStartupMessage() => [] (line: 153)
+	
+ ==========================
+ JMS send template: 
+	 Connection Factory: org.springframework.jms.connection.SingleConnectionFactory
+	 default Destination: csap-test-PNIGHTIN-M6NYP-${HOST}
+	 priority: 4
+	 Session Ack Mode: 1
+	 Time to live: 0
+ 
+==========================
+
+
+2017-09-15 15:53:02,110 ==== JmsConfig.java ==== thread: restartedMain ==== WARN    >
+org.sample.JmsConfig.defaultJmsListenerContainerFactory() => [] (line: 74)
+	
+
+ ==========================
+ @JmsListener Support: 
+	 serverUrl: vm://localhost?broker.persistent=false
+	 q name: csap-test-PNIGHTIN-M6NYP-${HOST}
+	 concurrency: 1-30
+	 maxMessagesPerTask: 1
+	 clientId: <host>-JmsListeners
+	 receiveTimeout: 5000
+==========================
+
+
+
+2017-09-15 15:53:02,807 ==== Csap_Tester_Application.java ==== thread: restartedMain ==== WARN    >
+org.sample.Csap_Tester_Application.addResourceHandlers() => [] (line: 85)
+	
+
+
+ Desktop detected: Caching DISABLED 
+
+
+
+
+2017-09-15 15:53:04,897 ==== CsapBootConfig.java ==== thread: restartedMain ==== WARN    >
+org.csap.integations.CsapBootConfig.onApplicationEvent() => [] (line: 82)
+	
+ === csap.information:
+	 name:  MyDesktop
+	 httpPort:  8090
+	 lb url:  http://csap-secure.yourcompany.com
+	 direct url:  http://PNIGHTIN-M6NYP.yourcompany.com:8090
+	 version:  1.0-Desktop
+	 workingDir:  null
+	 baseContext:  /csap
+
+ === csap.documentation:
+	 available at:  /csap/docs
+
+ === csap.locator: 
+	 Cache Policies: file:/C:/Users/pnightin/git/csap-starter/csap-starter-tester/target/classes/ehcache.xml
+	 Cache id: ROUND_ROBIN_CACHE: roundRobinUrlCache
+	 Cache id: LOW_RESOURCE_CACHE: lowResourceUrlCache
+ 
+ === csap.performance:
+	 JavaSimon Mbean:  org.csap:application=CsapPerformance,name=SimonManager
+	 JavaSimon Console Url: /csap/simon
+	 Monitored Beans: @CsapMonitor
+	 Monitored urls:  / /hello /spring-app/* /spring-rest/* /api/* /jersey/*
+	 CsapPerformance MBean:  org.csap:application=CsapPerformance,name=PerformanceMonitor
+	 Alert Settings: Report interval: 30 SECONDS
+		 In-Memory cache size: 1000
+		 Throttle: maximum: 5 per: 1 HOURS
+		 Email: Addresses: disabled,  Frequency: 4 HOURS
+		 server: outbound.yourCompany.com:25 max: 300ms
+		 Limits: [
+		health.exceptions occurences-max: 1 collection: 1 MINUTES (Empty instances ignored), 
+		oracle.jdbc.sql.insert meanTime: 10.0 ms maxTime: 20.0 ms collection: 30 SECONDS (Empty instances ignored), 
+		jms.SimpleJms.processRawMessageForTestScenarios() meanTime: 50.0 ms maxTime: 300 ms collection: 30 SECONDS (Empty instances ignored)]
+
+ === csap.encryptable-properties: 
+	 Default algorithm and key loaded from csap.encryptable-properties in application.yaml.
+		 Files /etc/csap.token and $HOME/etc/csap.token, and then env vars will be checked for custom settings.
+	 token:default used
+	 algorithm: PBEWITHMD5ANDDES
+	 Resource Location  : class path resource [csapSecurity.properties] location: file:/C:/Users/pnightin/git/csap-starter/csap-starter-tester/target/classes/csapSecurity.properties
+	 Resource Location  : class path resource [appSecure.properties] location: file:/C:/Users/pnightin/git/csap-starter/csap-starter-tester/target/classes/appSecure.properties
+	 Resource Location  : file [C:\Users\pnightin\csapSecurity.properties] location: file:/C:/Users/pnightin/csapSecurity.properties
+
+
+
+2017-09-15 15:53:04,974 ==== TomcatEmbeddedServletContainer.java ==== thread: restartedMain ==== INFO    >
+org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start() => [] (line: 201)
+	Tomcat started on port(s): 8090 (http)
+
+2017-09-15 15:53:30,947 ==== AlertProcessor.java ==== thread: AlertProcessor_30-1 ==== WARN    >
+org.csap.alerts.AlertProcessor.buildHealthReport() => [] (line: 423)
+	
+ *** HealthReport: 
+ {
+  "collectionCount" : 1,
+  "lastCollected" : "15:53:30 , Sep 15",
+  "isHealthy" : false,
+  "undefined" : [ ],
+  "pendingFirstInterval" : [ "health.exceptions", "oracle.jdbc.sql.insert", "jms.SimpleJms.processRawMessageForTestScenarios()" ],
+  "limitsExceeded" : [ {
+    "id" : "org.sample.HealthMonitor.failed",
+    "type" : "CustomHealth",
+    "description" : "Unable to query JMS: v01app-prd015"
+  } ]
+}
+

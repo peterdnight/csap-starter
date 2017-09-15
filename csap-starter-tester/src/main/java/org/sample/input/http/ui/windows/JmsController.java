@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.csap.helpers.CsapRestTemplateFactory;
 import org.javasimon.SimonManager;
 import org.javasimon.Split;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -56,7 +56,7 @@ public class JmsController {
 	}
 
 	@Inject
-	private BootEnterpriseApplication myApp;
+	private Csap_Tester_Application myApp;
 
 	@GetMapping ( "/hungReport" )
 	@ResponseBody

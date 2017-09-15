@@ -33,7 +33,7 @@ import org.csap.helpers.CsapRestTemplateFactory;
 import org.csap.integations.CsapSecurityConfiguration;
 import org.javasimon.SimonManager;
 import org.javasimon.Split;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.JmsConfig;
 import org.sample.jpa.Demo_DataAccessObject;
 import org.sample.jpa.JobSchedule;
@@ -95,7 +95,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  *      <IMG SRC="doc-files/spring.jpg">
  */
 @RestController
-@RequestMapping ( BootEnterpriseApplication.SPRINGREST_URL )
+@RequestMapping ( Csap_Tester_Application.SPRINGREST_URL )
 @CsapDoc ( title = "Messaging and DB demos and tests" , notes = {
 		"Many JPA and JMS examples are included to demonstrate both code and performance",
 		"<a class='pushButton' target='_blank' href='https://github.com/csap-platform/csap-core/wiki'>learn more</a>",
@@ -441,7 +441,7 @@ public class MsgAndDbRequests implements InitializingBean {
 		return resultNode;
 	}
 
-	@RequestMapping ( BootEnterpriseApplication.LARGE_PARAM_URL )
+	@RequestMapping ( Csap_Tester_Application.LARGE_PARAM_URL )
 	public String largePayload (
 									@RequestParam ( required = false ) String doc,
 									HttpServletRequest request, HttpServletResponse response )
@@ -475,7 +475,7 @@ public class MsgAndDbRequests implements InitializingBean {
 
 		String restUrl = "http://localhost:"
 				+ request.getServerPort() + request.getContextPath()
-				+ BootEnterpriseApplication.SPRINGREST_URL + BootEnterpriseApplication.LARGE_PARAM_URL;
+				+ Csap_Tester_Application.SPRINGREST_URL + Csap_Tester_Application.LARGE_PARAM_URL;
 
 		SimpleClientHttpRequestFactory simpleClientRequestFactory = new SimpleClientHttpRequestFactory();
 		simpleClientRequestFactory.setReadTimeout( 5000 );
@@ -528,7 +528,7 @@ public class MsgAndDbRequests implements InitializingBean {
 
 		String restUrl = "http://localhost:"
 				+ request.getServerPort() + request.getContextPath()
-				+ BootEnterpriseApplication.JERSEY_URL + "/simpleSpringRest/dummyHost";
+				+ Csap_Tester_Application.JERSEY_URL + "/simpleSpringRest/dummyHost";
 
 		SimpleClientHttpRequestFactory simpleClientRequestFactory = new SimpleClientHttpRequestFactory();
 		simpleClientRequestFactory.setReadTimeout( 5000 );

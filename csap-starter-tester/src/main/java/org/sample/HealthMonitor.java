@@ -10,7 +10,7 @@ import org.csap.alerts.AlertProcessor;
 import org.csap.integations.CsapPerformance;
 import org.javasimon.SimonManager;
 import org.javasimon.Split;
-import org.sample.BootEnterpriseApplication.HealthSettings;
+import org.sample.Csap_Tester_Application.HealthSettings;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.sample.input.http.ui.windows.JmsController;
 import org.sample.input.jms.SimpleJms;
@@ -44,7 +44,7 @@ public class HealthMonitor {
 	private Demo_DataAccessObject testDao;
 
 	@Inject
-	private BootEnterpriseApplication myApp;
+	private Csap_Tester_Application myApp;
 	
 
 	@PostConstruct

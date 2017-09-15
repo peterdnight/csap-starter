@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
 import org.csap.docs.CsapDoc;
-import org.sample.BootEnterpriseApplication;
+import org.sample.Csap_Tester_Application;
 import org.sample.input.http.ui.rest.MsgAndDbRequests;
 import org.sample.input.http.ui.rest.TestObjectForMessaging;
 import org.sample.jpa.Demo_DataAccessObject;
@@ -45,7 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
-@RequestMapping(BootEnterpriseApplication.SPRINGAPP_URL)
+@RequestMapping(Csap_Tester_Application.SPRINGAPP_URL)
 @CsapDoc(title = "Messaging and Database Dashboard", type=CsapDoc.PUBLIC,
 		notes = {"Insert and remove messages, including the ability to perform and time bulk operations"
 		, "<a class='pushButton' target='_blank' href='https://github.com/csap-platform/csap-core/wiki'>learn more</a>"
