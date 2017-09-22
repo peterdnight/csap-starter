@@ -11,7 +11,7 @@
 		<groupId>org.csap</groupId>
 		<artifactId>csap-starter-parent</artifactId>
 		<version>1.5.7.1</version>  
-		<relativePath/>
+		<relativePath>csap-starter-parent/pom.xml</relativePath>
 		<!--<relativePath>../csap-starter/csap-starter-parent/pom.xml</relativePath>-->
 	</parent> 
 
