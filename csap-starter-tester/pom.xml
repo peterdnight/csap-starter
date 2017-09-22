@@ -13,7 +13,7 @@
 		<groupId>org.csap</groupId> 
 		<artifactId>csap-starter-parent</artifactId> 
 		<version>1.5.7.1</version> 
-		<relativePath/>
+		<relativePath>../csap-starter/csap-starter-parent</relativePath>
 		<!-- ../csap-starter/csap-starter-parent</relativePath>  for use on desktop -->
 	</parent>
 
@@ -56,13 +56,13 @@
 			<artifactId>httpclient</artifactId>
 		</dependency>
 
-		<!--  Uncomment to use oracle -->
+		<!--  Uncomment to use oracle
 		<dependency>
 			<groupId>com.oracle.jdbc</groupId>
 			<artifactId>ojdbc</artifactId>
 			<version>6</version>
 			<type>jar</type>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
