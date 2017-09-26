@@ -180,12 +180,19 @@ public class CsapEncryptableProperties {
 						String sysPropertyName = resourceIdentifier.substring( 2,
 								resourceIdentifier.lastIndexOf( "}" ) );
 						String sysPropertyValue = System.getProperty( sysPropertyName );
+						
+						if ( sysPropertyValue == null) {
+							sysPropertyValue = System.getenv( sysPropertyName );
+						}
 						String fixedPath = resourceIdentifier
 								.substring( resourceIdentifier.lastIndexOf( "}" ) + 1 );
-						logger.debug( "sysPropertyName: {} , sysPropertyValue: {}", sysPropertyName,
-								sysPropertyValue );
+						logger.debug( "Sytems Property: {} , value: {}", sysPropertyName, sysPropertyValue );
 						resource = new FileSystemResource(
 								sysPropertyValue + fixedPath );
+					} else if ( resourceIdentifier.startsWith( "file:" ) ) {
+						logger.debug( "resourceIdentifier: {} , sysPropertyValue: {}", resourceIdentifier, resourceIdentifier.substring( 5 ) );
+						resource = new FileSystemResource( resourceIdentifier.substring( 5 ) );
+						
 					} else {
 						// Using classpath resource
 						resource = new ClassPathResource( resourceIdentifier );
