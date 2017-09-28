@@ -7,8 +7,9 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>BootReference</name>
-	<description>Demo project for Spring Boot</description>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Simple csap starter sample project - useful for getting started or new projects</description>
+	<url>https://github.com/csap-platform/csap-core/wiki</url>
 
 	<parent>
 		<groupId>org.csap</groupId>
@@ -17,6 +18,7 @@
 		<relativePath>../csap-starter/csap-starter-parent</relativePath>
 		<!-- ../csap-starter/csap-starter-parent</relativePath> for use on desktop -->
 	</parent>
+
 
 	<properties>
 		<!-- Defaults from csap-starter to java 8 -->

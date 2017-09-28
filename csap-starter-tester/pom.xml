@@ -7,14 +7,16 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<description>csap-starter sample project. Includes infra tests, jpa, jms tests, etc</description>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Extensive enterprise and infrastructure tests and code samples.</description>
+	<url>https://github.com/csap-platform/csap-core/wiki</url>
 
 	<parent>
-		<groupId>org.csap</groupId> 
-		<artifactId>csap-starter-parent</artifactId> 
-		<version>1.5.7.2</version> 
+		<groupId>org.csap</groupId>
+		<artifactId>csap-starter-parent</artifactId>
+		<version>1.5.7.2</version>
 		<relativePath>../csap-starter/csap-starter-parent</relativePath>
-		<!-- ../csap-starter/csap-starter-parent</relativePath>  for use on desktop -->
+		<!-- ../csap-starter/csap-starter-parent</relativePath> for use on desktop -->
 	</parent>
 
 	<properties>

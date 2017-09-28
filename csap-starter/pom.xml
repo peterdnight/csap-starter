@@ -5,7 +5,10 @@
 
 	<artifactId>csap-starter</artifactId>
 	<packaging>jar</packaging>
-	<description>CSAP utilities for working with enterprise and boot</description>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Extension of Spring Boot starter with extensive configuration attibutes.</description>
+	<url>https://github.com/csap-platform/csap-core/wiki</url>
 
 	<parent> 
 		<groupId>org.csap</groupId>
@@ -15,8 +18,6 @@
 		<!--<relativePath>../csap-starter/csap-starter-parent/pom.xml</relativePath>-->
 	</parent> 
 
-	<name>csap-starter</name>
-	<url>https://github.com/csap-platform/csap-starter</url>
 
 	<!-- Organize dependencies in priority order -->
 
