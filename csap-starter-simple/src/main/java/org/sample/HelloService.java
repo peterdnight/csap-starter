@@ -63,7 +63,7 @@ public class HelloService {
 					+ LocalDateTime.now().format( DateTimeFormatter.ofPattern( "HH:mm:ss,   MMMM d  uuuu " ) );
 		}
 	}
-	
+	 
 	@RequestMapping({ "helloWithOptionalName", "helloWithOptionalName/{name}" })
 	public ObjectNode helloWithOptionalName ( @PathVariable Optional<String> name ) {
 
