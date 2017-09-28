@@ -64,7 +64,7 @@ public class HelloService {
 		}
 	}
 	
-	@RequestMapping({ "helloWithOptionalName", "helloWithOptional/{name}" })
+	@RequestMapping({ "helloWithOptionalName", "helloWithOptionalName/{name}" })
 	public ObjectNode helloWithOptionalName ( @PathVariable Optional<String> name ) {
 
 		ObjectNode resultJson = jacksonMapper.createObjectNode();
