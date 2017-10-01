@@ -20,8 +20,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import a_setup.InitializeLogging;
 
@@ -39,6 +43,10 @@ public class Boot_Container {
 
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+
+	@Autowired
+	private Environment springEnv;
 
 	@Test
 	public void load_context() {
@@ -59,6 +67,47 @@ public class Boot_Container {
 		// Assert.assertFalse( true);
 
 	}
+	
+
+	@Test
+	public void test_spring_environment() throws UnsupportedEncodingException {
+		
+		logger.info("server.core: {}, peter.test: {}", 
+				springEnv.getProperty("server.port"),
+				springEnv.getProperty("peter.test"));
+		
+	}
+	
+	@Inject 
+	ObjectMapper jsonMapper ;
+	
+	
+	static class SimplePerson {
+		@Override
+		public String toString() {
+			return "TestJson [name=" + name + ", age=" + age + "]";
+		}
+		public String name;
+		public String age ;
+	}
+	
+	@Test
+	public void test_simple_json() throws Exception {
+		
+		ObjectNode testJsonObject = jsonMapper.createObjectNode() ;
+
+		testJsonObject.put("name", "tay") ;
+		testJsonObject.put("age", 5) ;
+		
+		SimplePerson simplePerson = jsonMapper.readValue(testJsonObject.toString(), SimplePerson.class) ;
+		
+		
+		logger.info("testJsonObject: {}\n simplePerson: {}", 
+				testJsonObject,
+				simplePerson);
+		
+	}
+	
 
 	@Test
 	public void testEncode() throws UnsupportedEncodingException {
