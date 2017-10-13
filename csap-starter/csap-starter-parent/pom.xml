@@ -278,7 +278,7 @@
 	</dependencyManagement>
 
 
-	<!--  engci-maven-master.cisco.com only when dns is broken -->
+	<!-- Refer to sample from maven-sample-settings.xml for repo setup  -->
 	<distributionManagement>
 		<repository>
 			<id>csap-release-repo</id>
