@@ -1,2 +1,6 @@
 /target/
-/.factorypath
+/logs/
+/build/
+/temp/
+/.*
+/.*.md.html
