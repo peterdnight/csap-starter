@@ -36,10 +36,10 @@ spring:
 my-service-configuration:
   db:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    username: ims_wkf_admin
+    username: ${dbUser:CHANGE_ME}
     password: ${dbPass:CHANGE_ME}
     max-active: 50
-    url: "jdbc:oracle:oci8:@cafi7dev"
+    url: ${dbUrl:CHANGE_ME}
   jms:
     enabled: true
     server-url: vm://localhost?broker.persistent=false
