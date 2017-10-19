@@ -4,8 +4,9 @@
 
 # Current active profiles; use desktop,embedded for full isolation. 
 # if embedded is removed , csap sandbox with oracle will be used. 
-# ociOracle - uses thick driver to locate
+# oracle - uses thick or thin drivers - need to install instant client from oracle.com and add jdbc.jar to path
 spring.profiles.active: desktop,embedded
+#spring.profiles.active: desktop,oracle,company
 
 
 # YML supports MULTIPLE documents in the same file; they are separated by ---
@@ -107,7 +108,7 @@ csap:
     property-files:
       - csapSecurity.properties  # security
       - appSecure.properties     # jms q names
-      - ${user.home}/csapSecurity.properties #overwrite the above if it exists
+      - ${csapTest}/csapSecurity.properties #overwrite the above if it exists
       
   web-server:
     enabled: true
@@ -255,7 +256,7 @@ csap:
     property-files:
       - appSecure.properties
       - csapSecurity.properties
-      - ${user.home}/csapSecurity.properties #overwrite the above if it exists
+      - ${csapTest}/csapSecurity.properties #overwrite the above if it exists
       
 # auto timing and performance, use: org.javasimon.jdbc4.Driver: 
 # jdbc:simon:oracle:thin:@csapdb-dev02.yourcompany.com:1521:dev02;SIMON_REAL_DRV=oracle.jdbc.driver.OracleDriver;SIMON_PREFIX=oracle.jdbc

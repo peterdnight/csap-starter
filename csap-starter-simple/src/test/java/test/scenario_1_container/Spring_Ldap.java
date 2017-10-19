@@ -57,7 +57,7 @@ import a_setup.InitializeLogging;
 
 @RunWith ( SpringRunner.class )
 // @SpringBootTest
-@TestPropertySource ( locations = "file:${user.home}/csapSecurity.properties" )
+@TestPropertySource ( locations = "file:${csapTest}/csapSecurity.properties" )
 public class Spring_Ldap {
 	final static private Logger logger = LoggerFactory.getLogger( Spring_Ldap.class );
 
