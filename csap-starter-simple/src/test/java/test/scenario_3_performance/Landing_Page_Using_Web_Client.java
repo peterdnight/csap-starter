@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,6 +36,11 @@ public class Landing_Page_Using_Web_Client {
 
 	@Autowired
 	private Environment springEnvironment;
+	
+
+	
+	@Autowired
+	private ApplicationContext applicationContext;
 	 
 	@Test   
 	public void validate_landing_page_with_test_web_client() throws Exception {
@@ -42,7 +48,9 @@ public class Landing_Page_Using_Web_Client {
 		String port = springEnvironment.getProperty( "server.port" );
 		String landingPageUrl = "http://localhost:" + port +"/" ;
 		
-		logger.info( InitializeLogging.TC_HEAD + "simple mvc test url: {}", landingPageUrl );
+		logger.info( InitializeLogging.TC_HEAD + "simple mvc test url: {}, beans loaded: {}", 
+			landingPageUrl,
+			applicationContext.getBeanDefinitionCount() );
 		// https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html
 		// http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#spring-mvc-test-server-htmlunit-mah
 

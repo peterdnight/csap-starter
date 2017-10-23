@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -38,13 +39,18 @@ public class Csap_Health_Page_Using_Html_Unit {
 	@Autowired
 	private Environment springEnvironment;
 	
+	@Autowired
+	private ApplicationContext applicationContext;
+	
 	@Test   
 	public void validate_csap_health() throws Exception {
 		
 		
 		String port = springEnvironment.getProperty( "server.port" );
 		String healthUrl = "http://localhost:" + port +"/csap/health" ;
-		logger.info( InitializeLogging.TC_HEAD + " using webClient to hit health url: {}", healthUrl );
+		logger.info( InitializeLogging.TC_HEAD + " using webClient to hit health url: {}, beans loaded: {}", 
+			healthUrl,
+			applicationContext.getBeanDefinitionCount());
 		// https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html
 		// http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#spring-mvc-test-server-htmlunit-mah
 
