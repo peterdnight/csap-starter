@@ -153,7 +153,7 @@ public class AlertSettings {
 		private String addresses = "disabled";
 
 		public String[] getEmails () {
-			if ( addresses.equals( "disabled" ) ) {
+			if ( addresses.equals( "disabled" ) || getEmailHost().toLowerCase().contains( "yourcompany" )) {
 				return null;
 			}
 
