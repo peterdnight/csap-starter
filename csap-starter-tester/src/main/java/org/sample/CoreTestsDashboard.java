@@ -54,7 +54,7 @@ public class CoreTestsDashboard {
 		}
 		
 		// optionally override the page name - default is the servicename
-		// springViewModel.addAttribute( "csapPageLabel", "Demo99" );
+		springViewModel.addAttribute( "csapPageLabel", "Genesys demo" ); 
 		
 		springViewModel.addAttribute( "broker", broker );
 		springViewModel.addAttribute( "queue", queue );
