@@ -6,9 +6,7 @@ import org.csap.CsapMonitor;
 import org.csap.integations.CsapServiceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +26,7 @@ public class HelloClient {
 	final Logger logger = LoggerFactory.getLogger( HelloClient.class );
 	
 	@Inject
-	CsapServiceLocator csapLocator; 
+	CsapServiceLocator csapServiceLocator;
 	
 	RestTemplate restTemplate = new RestTemplate() ; // lots of options for pools, etc
 	
@@ -37,7 +35,7 @@ public class HelloClient {
 	@Retryable(maxAttempts=4)
 	@RequestMapping("/helloRemoteRandom")
 	public String helloRandom() {
-		String serviceUrl = csapLocator.getRandomInstance( csapLocator.getServiceUrls( getHelloProvider() )) ;
+		String serviceUrl = csapServiceLocator.getRandomInstance( csapServiceLocator.getServiceUrls( getHelloProvider() )) ;
 		logger.info( "Using binding: {} " , serviceUrl );
 		
 		String result = "none" ;
@@ -53,7 +51,7 @@ public class HelloClient {
 	@Retryable(maxAttempts=2)
 	@RequestMapping("/helloRoundRobin")
 	public String helloRoundRobin() {
-		String serviceUrl = csapLocator.getRoundRobinInstance( csapLocator.getServiceUrls( getHelloProvider() )) ;
+		String serviceUrl = csapServiceLocator.getRoundRobinInstance( csapServiceLocator.getServiceUrls( getHelloProvider() )) ;
 		logger.info( "Using binding: {} " , serviceUrl );
 		
 		String result = "none" ;
@@ -69,7 +67,7 @@ public class HelloClient {
 	@Retryable(maxAttempts=5)
 	@RequestMapping(value={"/hello/lowCpu", "/hello/lowLoad"} )
 	public String helloLowResource() {
-		String serviceUrl = csapLocator.getLowestCpuInstance( getHelloProvider() ) ;
+		String serviceUrl = csapServiceLocator.getLowestCpuInstance( getHelloProvider() ) ;
 		logger.info( "Using binding: {} " , serviceUrl );
 		
 		String result = "none" ;

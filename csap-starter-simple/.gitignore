@@ -3,3 +3,9 @@
 /build/
 /temp/
 /.*.md.html
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
